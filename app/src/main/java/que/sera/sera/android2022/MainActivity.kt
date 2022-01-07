@@ -1,18 +1,18 @@
 package que.sera.sera.android2022
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import que.sera.sera.android2022.ui.main.MainFragment
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import que.sera.sera.android2022.ui.main.MainScreen
+import que.sera.sera.android2022.ui.main.MainViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
-                .commitNow()
+        val viewModel = MainViewModel()
+        setContent {
+            MainScreen(viewModel)
         }
     }
 }

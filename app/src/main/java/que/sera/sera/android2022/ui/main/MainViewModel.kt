@@ -1,7 +1,9 @@
 package que.sera.sera.android2022.ui.main
 
-import android.arch.lifecycle.ViewModel
+import androidx.annotation.StringRes
+import androidx.lifecycle.ViewModel
+import que.sera.sera.android2022.R
 
-class MainViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
-}
+class MainViewModel(
+    @StringRes val greeting: Int = R.string.greeting
+) : ViewModel()
