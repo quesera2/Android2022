@@ -1,4 +1,4 @@
-package que.sera.sera.Android2022.ui.main
+package que.sera.sera.android2022.ui.main
 
 import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import que.sera.sera.Android2022.R
+import que.sera.sera.android2022.R
 
 class MainFragment : Fragment() {
 

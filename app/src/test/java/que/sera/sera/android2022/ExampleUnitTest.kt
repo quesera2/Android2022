@@ -1,4 +1,4 @@
-package que.sera.sera.Android2022
+package que.sera.sera.android2022
 
 import org.junit.Test
 

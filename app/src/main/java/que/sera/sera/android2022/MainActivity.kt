@@ -1,8 +1,8 @@
-package que.sera.sera.Android2022
+package que.sera.sera.android2022
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import que.sera.sera.Android2022.ui.main.MainFragment
+import que.sera.sera.android2022.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package que.sera.sera.Android2022.ui.main
+package que.sera.sera.android2022.ui.main
 
 import android.arch.lifecycle.ViewModel
 
