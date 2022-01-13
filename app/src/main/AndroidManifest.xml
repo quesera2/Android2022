@@ -3,6 +3,7 @@
     package="que.sera.sera.android2022">
 
     <application
+        android:name=".ToDoApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
