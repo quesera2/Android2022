@@ -5,6 +5,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Before
@@ -36,10 +38,10 @@ class ToDoDataBaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeUserAndReadInList() {
+    fun writeUserAndReadInList() = runBlocking {
         val todo = ToDo(name = "テスト")
         todoDao.insert(todo)
-        val expect = todoDao.getAll().first()
+        val expect = todoDao.getAll().first().first()
         assertThat(expect.id, equalTo(1))
         assertThat(expect.name, equalTo(todo.name))
         assertThat(expect.updated, equalTo(todo.updated))
