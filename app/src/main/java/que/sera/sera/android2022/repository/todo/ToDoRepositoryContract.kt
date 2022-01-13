@@ -1,10 +1,11 @@
 package que.sera.sera.android2022.repository.todo
 
+import kotlinx.coroutines.flow.Flow
 import que.sera.sera.android2022.model.todo.ToDo
 
 interface ToDoRepositoryContract {
 
-    suspend fun getTodos(): List<ToDo>
+    fun getTodos(): Flow<List<ToDo>>
 
-    suspend fun registerTodo(todo: ToDo)
+    fun registerTodo(todo: ToDo)
 }
