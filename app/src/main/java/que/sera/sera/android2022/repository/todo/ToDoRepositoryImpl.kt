@@ -10,5 +10,5 @@ class ToDoRepositoryImpl(
 
     override fun getTodos(): Flow<List<ToDo>> = database.toDoDao().getAll()
 
-    override fun registerTodo(todo: ToDo) = database.toDoDao().insert(todo)
+    override suspend fun registerTodo(todo: ToDo) = database.toDoDao().insert(todo)
 }

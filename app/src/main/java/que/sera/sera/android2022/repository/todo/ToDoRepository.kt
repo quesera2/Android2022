@@ -7,5 +7,5 @@ interface ToDoRepository {
 
     fun getTodos(): Flow<List<ToDo>>
 
-    fun registerTodo(todo: ToDo)
+    suspend fun registerTodo(todo: ToDo)
 }

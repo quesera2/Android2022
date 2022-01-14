@@ -1,4 +1,3 @@
 <resources>
-    <string name="app_name">Android2022</string>
-    <string name="greeting">Hello, World.</string>
+    <string name="app_name">ToDoアプリ</string>
 </resources>

@@ -12,5 +12,5 @@ interface ToDoDao {
     fun getAll(): Flow<List<ToDo>>
 
     @Insert
-    fun insert(vararg todos: ToDo)
+    suspend fun insert(vararg todos: ToDo)
 }
