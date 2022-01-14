@@ -38,7 +38,7 @@ fun MainScreen(
             topBar = { AppBar() },
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { viewModel.addTodo() }
+                    onClick = { viewModel.addToDo() }
                 ) {
                     Icon(Icons.Filled.Add, contentDescription = "追加")
                 }
@@ -46,7 +46,8 @@ fun MainScreen(
             content = {
                 ToDoListView(
                     listItems = viewModel.getToDos(),
-                    modifier = modifier
+                    modifier = modifier,
+                    onClick = { viewModel.doneToDo(it) }
                 )
             }
         )
@@ -67,27 +68,34 @@ fun AppBar(
 @SuppressLint("ModifierParameter")
 fun ToDoListView(
     modifier: Modifier = Modifier,
-    listItems: Flow<List<ToDo>> = emptyFlow()
+    listItems: Flow<List<ToDo>> = emptyFlow(),
+    onClick: (ToDo) -> Unit = { }
 ) {
     val listItemsState = listItems.collectAsState(emptyList())
 
     LazyColumn {
-        items(listItemsState.value) { ToDoListItem(listItem = it) }
+        items(listItemsState.value) {
+            ToDoListItem(
+                listItem = it,
+                onClick = onClick
+            )
+        }
     }
 }
 
 private val testData =
-    ToDo(0, "テスト", ToDoStatus.Incomplete, LocalDateTime.now(), LocalDateTime.now())
+    ToDo(0, "テスト", ToDoStatus.Completed, LocalDateTime.now(), LocalDateTime.now())
 
 @Preview
 @Composable
 @SuppressLint("ModifierParameter")
 fun ToDoListItem(
     listItem: ToDo = testData,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (ToDo) -> Unit = { }
 ) {
     Column(
-        modifier = modifier.clickable { /* TODO */ }
+        modifier = modifier.clickable { onClick(listItem) }
     ) {
         Row(
             modifier = modifier

@@ -14,16 +14,22 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val toDoRepository: ToDoRepository
 ) : ViewModel() {
-    fun getToDos(): Flow<List<ToDo>> = toDoRepository.getTodos()
+    fun getToDos(): Flow<List<ToDo>> = toDoRepository.getToDos()
 
-    fun addTodo() {
-        viewModelScope.launch {
-            ToDo(
-                name = "テスト",
-                status = ToDoStatus.Incomplete
-            ).also {
-                toDoRepository.registerTodo(it)
-            }
+    fun addToDo() = viewModelScope.launch {
+        ToDo(
+            name = "テスト",
+            status = ToDoStatus.Incomplete
+        ).also {
+            toDoRepository.registerToDo(it)
+        }
+    }
+
+    fun doneToDo(toDo: ToDo) = viewModelScope.launch {
+        toDo.copy(
+            status = ToDoStatus.Completed
+        ).also {
+            toDoRepository.updateToDo(it)
         }
     }
 }
