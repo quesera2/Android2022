@@ -15,6 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -94,7 +96,18 @@ fun ToDoListItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = listItem.name,
+                text = "${listItem.name} id:${listItem.id}",
+                color = when (listItem.status) {
+                    ToDoStatus.Incomplete -> Color.DarkGray
+                    ToDoStatus.Completed -> Color.Gray
+                },
+                style = when (listItem.status) {
+                    ToDoStatus.Incomplete -> TextStyle.Default
+                    ToDoStatus.Completed -> TextStyle(
+                        textDecoration = TextDecoration.LineThrough,
+                        color = Color.Gray
+                    )
+                }
             )
             Spacer(
                 modifier = Modifier.weight(1f)
@@ -104,7 +117,7 @@ fun ToDoListItem(
                 contentDescription = "タスク状態",
                 tint = when (listItem.status) {
                     ToDoStatus.Incomplete -> Color.Transparent
-                    ToDoStatus.Completed -> Color.Green
+                    ToDoStatus.Completed -> Color.LightGray
                 }
             )
         }
