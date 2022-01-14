@@ -12,5 +12,5 @@ class ToDoRepositoryImpl(
 
     override suspend fun registerToDo(todo: ToDo) = dao.insert(todo)
 
-    override suspend fun updateToDo(todo: ToDo) = dao.insert(todo)
+    override suspend fun updateToDo(todo: ToDo) = dao.update(todo)
 }
