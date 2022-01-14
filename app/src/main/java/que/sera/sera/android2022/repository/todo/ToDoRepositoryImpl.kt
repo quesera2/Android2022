@@ -2,13 +2,15 @@ package que.sera.sera.android2022.repository.todo
 
 import kotlinx.coroutines.flow.Flow
 import que.sera.sera.android2022.model.todo.ToDo
-import que.sera.sera.android2022.room.AppDatabase
+import que.sera.sera.android2022.room.ToDoDao
 
 class ToDoRepositoryImpl(
-    private val database: AppDatabase
+    private val dao: ToDoDao
 ) : ToDoRepository {
 
-    override fun getTodos(): Flow<List<ToDo>> = database.toDoDao().getAll()
+    override fun getToDos(): Flow<List<ToDo>> = dao.getAll()
 
-    override suspend fun registerTodo(todo: ToDo) = database.toDoDao().insert(todo)
+    override suspend fun registerToDo(todo: ToDo) = dao.insert(todo)
+
+    override suspend fun updateToDo(todo: ToDo) = dao.insert(todo)
 }

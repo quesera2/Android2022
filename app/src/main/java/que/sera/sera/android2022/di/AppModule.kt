@@ -10,6 +10,7 @@ import dagger.hilt.components.SingletonComponent
 import que.sera.sera.android2022.repository.todo.ToDoRepository
 import que.sera.sera.android2022.repository.todo.ToDoRepositoryImpl
 import que.sera.sera.android2022.room.AppDatabase
+import que.sera.sera.android2022.room.ToDoDao
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -22,10 +23,15 @@ object AppModule {
         @ApplicationContext context: Context
     ): AppDatabase = Room.databaseBuilder(context, AppDatabase::class.java, "app_db").build()
 
+    @Singleton
+    @Provides
+    fun provideToDoDao(
+        appDataBase: AppDatabase
+    ): ToDoDao = appDataBase.toDoDao()
 
     @Singleton
     @Provides
     fun provideToDoRepository(
-        appDatabase: AppDatabase
-    ): ToDoRepository = ToDoRepositoryImpl(appDatabase)
+        dao: ToDoDao
+    ): ToDoRepository = ToDoRepositoryImpl(dao)
 }

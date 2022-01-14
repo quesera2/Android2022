@@ -5,7 +5,9 @@ import que.sera.sera.android2022.model.todo.ToDo
 
 interface ToDoRepository {
 
-    fun getTodos(): Flow<List<ToDo>>
+    fun getToDos(): Flow<List<ToDo>>
 
-    suspend fun registerTodo(todo: ToDo)
+    suspend fun registerToDo(todo: ToDo)
+
+    suspend fun updateToDo(todo: ToDo)
 }
