@@ -1,4 +1,4 @@
-package que.sera.sera.android2022.ui.main
+package que.sera.sera.android2022.ui.detail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import que.sera.sera.android2022.ui.common.AppBar
 
 @ExperimentalMaterial3Api
 @Preview

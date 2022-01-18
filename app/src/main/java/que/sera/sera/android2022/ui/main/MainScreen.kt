@@ -14,7 +14,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,9 +21,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import que.sera.sera.android2022.R
 import que.sera.sera.android2022.model.todo.ToDo
 import que.sera.sera.android2022.model.todo.ToDoStatus
+import que.sera.sera.android2022.ui.common.AppBar
 import java.time.LocalDateTime
 
 @ExperimentalMaterial3Api
@@ -53,15 +52,6 @@ fun MainScreen(
     )
 }
 
-
-@Preview
-@Composable
-fun AppBar(
-    modifier: Modifier = Modifier
-) = SmallTopAppBar(
-    modifier = modifier,
-    title = { Text(stringResource(id = R.string.app_name)) }
-)
 
 @Preview
 @Composable

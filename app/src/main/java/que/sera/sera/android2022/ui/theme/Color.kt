@@ -1,4 +1,4 @@
-package que.sera.sera.android2022.ui.main.theme
+package que.sera.sera.android2022.ui.theme
 import androidx.compose.ui.graphics.Color
 
 

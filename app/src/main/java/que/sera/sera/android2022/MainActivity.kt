@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.ExperimentalMaterial3Api
 import dagger.hilt.android.AndroidEntryPoint
 import que.sera.sera.android2022.ui.main.MainScreen
-import que.sera.sera.android2022.ui.main.theme.AppTheme
+import que.sera.sera.android2022.ui.theme.AppTheme
 
 @ExperimentalMaterial3Api
 @AndroidEntryPoint
