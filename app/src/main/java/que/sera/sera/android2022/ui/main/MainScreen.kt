@@ -18,7 +18,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import que.sera.sera.android2022.model.todo.ToDo
@@ -31,13 +31,18 @@ import java.time.LocalDateTime
 @SuppressLint("ModifierParameter")
 fun MainScreen(
     modifier: Modifier = Modifier,
-    viewModel: MainViewModel = viewModel()
+    viewModel: MainViewModel,
+    navController: NavController,
 ) {
     Scaffold(
         topBar = { AppBar() },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { viewModel.addToDo() }
+                onClick = {
+                    viewModel.addToDo()
+                    //TODO 画面遷移テスト用
+                    navController.navigate("detail")
+                }
             ) {
                 Icon(Icons.Filled.Add, contentDescription = "追加")
             }

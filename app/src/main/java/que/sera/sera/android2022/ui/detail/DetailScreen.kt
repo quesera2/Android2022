@@ -10,13 +10,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import que.sera.sera.android2022.ui.common.AppBar
 
 @ExperimentalMaterial3Api
-@Preview
 @Composable
-fun DetailScreen() {
+fun DetailScreen(
+    navController: NavController,
+) {
     Scaffold(
         topBar = { AppBar() },
         content = {
@@ -25,7 +26,10 @@ fun DetailScreen() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Button(onClick = { /* TODO */ }) {
+                Button(onClick = {
+                    //TODO 画面遷移テスト用
+                    navController.popBackStack()
+                }) {
                     Text(text = "戻る")
                 }
             }
