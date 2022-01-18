@@ -5,10 +5,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -27,38 +27,38 @@ import que.sera.sera.android2022.model.todo.ToDo
 import que.sera.sera.android2022.model.todo.ToDoStatus
 import java.time.LocalDateTime
 
+@ExperimentalMaterial3Api
 @Composable
 @SuppressLint("ModifierParameter")
 fun MainScreen(
     modifier: Modifier = Modifier,
     viewModel: MainViewModel = viewModel()
 ) {
-    MaterialTheme {
-        Scaffold(
-            topBar = { AppBar() },
-            floatingActionButton = {
-                FloatingActionButton(
-                    onClick = { viewModel.addToDo() }
-                ) {
-                    Icon(Icons.Filled.Add, contentDescription = "追加")
-                }
-            },
-            content = {
-                ToDoListView(
-                    listItems = viewModel.getToDos(),
-                    modifier = modifier,
-                    onClick = { viewModel.doneToDo(it) }
-                )
+    Scaffold(
+        topBar = { AppBar() },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { viewModel.addToDo() }
+            ) {
+                Icon(Icons.Filled.Add, contentDescription = "追加")
             }
-        )
-    }
+        },
+        content = {
+            ToDoListView(
+                listItems = viewModel.getToDos(),
+                modifier = modifier,
+                onClick = { viewModel.doneToDo(it) }
+            )
+        }
+    )
 }
+
 
 @Preview
 @Composable
 fun AppBar(
     modifier: Modifier = Modifier
-) = TopAppBar(
+) = SmallTopAppBar(
     modifier = modifier,
     title = { Text(stringResource(id = R.string.app_name)) }
 )
@@ -129,6 +129,5 @@ fun ToDoListItem(
                 }
             )
         }
-        Divider()
     }
 }
