@@ -35,12 +35,14 @@ fun DetailScreen(
         viewModel.getInitialToDo(toDoId)
     }
 
-    when (val uiState = viewModel.uiState.value) {
-        DetailViewModelState.Loading ->
+    val uiState = viewModel.uiState.collectAsState()
+
+    when (val currentState = uiState.value) {
+        is DetailViewModelState.Loading ->
             // TODO: 読み込み中画面作る
             Text("読込中")
         is DetailViewModelState.Input -> ReminderRegister(
-            initialToDo = uiState.toDo,
+            initialToDoText = currentState.toDo.name,
             onRegister = { toDo ->
                 viewModel.upsertToDo(toDo)
                 navController.popBackStack()

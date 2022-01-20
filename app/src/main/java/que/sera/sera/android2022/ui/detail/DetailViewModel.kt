@@ -1,10 +1,11 @@
 package que.sera.sera.android2022.ui.detail
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import que.sera.sera.android2022.model.todo.ToDo
 import que.sera.sera.android2022.repository.todo.ToDoRepository
@@ -15,7 +16,8 @@ class DetailViewModel @Inject constructor(
     private val toDoRepository: ToDoRepository,
 ) : ViewModel() {
 
-    val uiState = mutableStateOf<DetailViewModelState>(DetailViewModelState.Loading)
+    private val _uiState = MutableStateFlow<DetailViewModelState>(DetailViewModelState.Loading)
+    val uiState: StateFlow<DetailViewModelState> = _uiState
 
     fun getInitialToDo(id: Int) = viewModelScope.launch {
         val result =
@@ -23,7 +25,7 @@ class DetailViewModel @Inject constructor(
             else toDoRepository.getToDo(id) ?: throw IllegalArgumentException()
         //TODO: ボトムシートとキーボードを同時に表示できないワークアラウンド
         delay(200)
-        uiState.value = DetailViewModelState.Input(result)
+        _uiState.value = DetailViewModelState.Input(result)
     }
 
     fun upsertToDo(toDo: ToDo) = viewModelScope.launch {
