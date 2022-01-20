@@ -13,37 +13,66 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.android.material.composethemeadapter3.Mdc3Theme
-import kotlinx.coroutines.delay
 import que.sera.sera.android2022.model.todo.ToDo
+import java.time.LocalDateTime
 
 @ExperimentalMaterial3Api
 @Composable
 fun DetailScreen(
+    viewModel: DetailViewModel,
     navController: NavController,
+    toDoId: Int
 ) {
-    ReminderRegister(
-        todo = ToDo(),
-        onRegister = { _ ->
+    LaunchedEffect(Unit) {
+        viewModel.getInitialToDo(toDoId)
+    }
 
-            navController.popBackStack()
-        }
-    )
+    when (val uiState = viewModel.uiState.value) {
+        DetailViewModelState.Loading ->
+            // TODO: 読み込み中画面作る
+            Text("読込中")
+        is DetailViewModelState.Input -> ReminderRegister(
+            initialToDo = uiState.toDo,
+            onRegister = { toDo ->
+                viewModel.upsertToDo(toDo)
+                navController.popBackStack()
+            },
+            onCancel = {
+                navController.popBackStack()
+            }
+        )
+    }
 }
 
 @Composable
 fun ReminderRegister(
     modifier: Modifier = Modifier,
-    todo: ToDo,
-    onRegister: (ToDo) -> Unit
+    initialToDo: ToDo,
+    onRegister: (ToDo) -> Unit,
+    onCancel: () -> Unit
 ) {
-    var changedTodo by remember { mutableStateOf(todo) }
+    var toDoText: TextFieldValue by remember {
+        mutableStateOf(
+            TextFieldValue(
+                text = initialToDo.name,
+                selection = TextRange(initialToDo.name.length)
+            )
+        )
+    }
     val focusRequester = remember { FocusRequester() }
+
+    fun changedToDo(): ToDo = initialToDo.copy(
+        name = toDoText.text,
+        updated = LocalDateTime.now()
+    )
 
     Column(
         modifier = modifier
@@ -56,8 +85,8 @@ fun ReminderRegister(
             modifier = modifier.fillMaxWidth()
         )
         OutlinedTextField(
-            value = changedTodo.name,
-            onValueChange = { changedTodo = changedTodo.copy(name = it) },
+            value = toDoText,
+            onValueChange = { toDoText = it },
             modifier = modifier
                 .fillMaxWidth()
                 .focusRequester(focusRequester),
@@ -66,7 +95,7 @@ fun ReminderRegister(
                 imeAction = ImeAction.Done
             ),
             keyboardActions = KeyboardActions(
-                onDone = { onRegister(changedTodo) }
+                onDone = { onRegister(changedToDo()) }
             )
         )
 
@@ -76,22 +105,19 @@ fun ReminderRegister(
             modifier = modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            OutlinedButton(onClick = { /*TODO*/ }) {
+            OutlinedButton(onClick = { onCancel() }) {
                 Text(text = "キャンセル")
             }
 
-            Button(onClick = { onRegister(changedTodo) }) {
-                Text(text = "登録する")
+            Button(onClick = { onRegister(changedToDo()) }) {
+                Text(text = if (initialToDo.id == 0) "登録する" else "更新する")
             }
         }
     }
 
-    LaunchedEffect(Unit) {
-        // BottomSheetのリサイズが終わるまで
-        // フォーカス移動を遅延させる必要がある
-        // TODO:スマートな方法が求められる
-        delay(20)
+    DisposableEffect(Unit) {
         focusRequester.requestFocus()
+        onDispose { }
     }
 }
 
@@ -99,6 +125,10 @@ fun ReminderRegister(
 @Composable
 fun PreviewReminderRegister() {
     Mdc3Theme {
-        ReminderRegister(todo = ToDo()) { }
+        ReminderRegister(
+            initialToDo = ToDo(),
+            onRegister = { },
+            onCancel = { }
+        )
     }
 }

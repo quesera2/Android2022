@@ -39,9 +39,7 @@ fun MainScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    viewModel.addToDo()
-                    //TODO 画面遷移テスト用
-                    navController.navigate("detail")
+                    navController.navigate("detail/0")
                 }
             ) {
                 Icon(Icons.Filled.Add, contentDescription = "追加")
@@ -51,7 +49,9 @@ fun MainScreen(
             ToDoListView(
                 listItems = viewModel.getToDos(),
                 modifier = modifier,
-                onClick = { viewModel.doneToDo(it) }
+                onClick = {
+                    navController.navigate("detail/${it.id}")
+                }
             )
         }
     )

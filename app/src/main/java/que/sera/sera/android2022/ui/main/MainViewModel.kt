@@ -16,15 +16,6 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
     fun getToDos(): Flow<List<ToDo>> = toDoRepository.getToDos()
 
-    fun addToDo() = viewModelScope.launch {
-        ToDo(
-            name = "テスト",
-            status = ToDoStatus.Incomplete
-        ).also {
-            toDoRepository.registerToDo(it)
-        }
-    }
-
     fun doneToDo(toDo: ToDo) = viewModelScope.launch {
         toDo.copy(
             status = ToDoStatus.Completed

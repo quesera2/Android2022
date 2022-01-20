@@ -1,9 +1,11 @@
 package que.sera.sera.android2022.ui.app
 
-import androidx.compose.animation.*
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import androidx.navigation.plusAssign
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -40,10 +42,15 @@ fun MyApp() {
                     )
                 }
                 bottomSheet(
-                    route = "detail",
-                ) {
+                    route = "detail/{toDoId}",
+                    arguments = listOf(navArgument("toDoId") {
+                        type = NavType.IntType
+                    })
+                ) { backStackEntry ->
                     DetailScreen(
-                        navController = navController
+                        viewModel = hiltViewModel(),
+                        navController = navController,
+                        toDoId = backStackEntry.arguments!!.getInt("toDoId")
                     )
                 }
             }
