@@ -12,6 +12,9 @@ interface ToDoDao {
     @Query("SELECT * FROM todo")
     fun getAll(): Flow<List<ToDo>>
 
+    @Query("SELECT * FROM todo WHERE id = :id")
+    fun findById(id: Int): ToDo
+
     @Insert
     suspend fun insert(vararg todos: ToDo)
 
