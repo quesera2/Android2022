@@ -10,6 +10,8 @@ class ToDoRepositoryImpl(
 
     override fun getToDos(): Flow<List<ToDo>> = dao.getAll()
 
+    override fun getToDo(id: Int): ToDo = dao.findById(id)
+
     override suspend fun registerToDo(todo: ToDo) = dao.insert(todo)
 
     override suspend fun updateToDo(todo: ToDo) = dao.update(todo)
