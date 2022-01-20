@@ -7,7 +7,7 @@ interface ToDoRepository {
 
     fun getToDos(): Flow<List<ToDo>>
 
-    fun getToDo(id: Int): ToDo
+    fun getToDo(id: Int): ToDo?
 
     suspend fun registerToDo(todo: ToDo)
 
