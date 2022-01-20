@@ -13,7 +13,7 @@ interface ToDoDao {
     fun getAll(): Flow<List<ToDo>>
 
     @Query("SELECT * FROM todo WHERE id = :id LIMIT 1")
-    fun findById(id: Int): ToDo?
+    suspend fun findById(id: Int): ToDo?
 
     @Insert
     suspend fun insert(vararg todos: ToDo)
