@@ -19,7 +19,7 @@ class DetailViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<DetailViewModelState>(DetailViewModelState.Loading)
     val uiState: StateFlow<DetailViewModelState> = _uiState
 
-    fun getInitialToDo(id: Int) = viewModelScope.launch {
+    fun fetchInitialToDo(id: Int) = viewModelScope.launch {
         val result =
             if (id == 0) ToDo()
             else toDoRepository.getToDo(id) ?: throw IllegalArgumentException()

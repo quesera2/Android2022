@@ -31,8 +31,9 @@ fun DetailScreen(
     navController: NavController,
     toDoId: Int
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.getInitialToDo(toDoId)
+    DisposableEffect(Unit) {
+        val job = viewModel.fetchInitialToDo(toDoId)
+        onDispose { job.cancel() }
     }
 
     val uiState = viewModel.uiState.collectAsState()
