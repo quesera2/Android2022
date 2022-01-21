@@ -9,7 +9,7 @@ import que.sera.sera.android2022.model.todo.ToDo
 
 @Dao
 interface ToDoDao {
-    @Query("SELECT * FROM todo")
+    @Query("SELECT * FROM todo ORDER BY CASE status WHEN 'Incomplete' THEN 0 ELSE 1 END, updated DESC")
     fun getAll(): Flow<List<ToDo>>
 
     @Query("SELECT * FROM todo WHERE id = :id LIMIT 1")
