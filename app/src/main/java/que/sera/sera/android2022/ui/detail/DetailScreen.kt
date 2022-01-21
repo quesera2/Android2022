@@ -21,8 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.android.material.composethemeadapter3.Mdc3Theme
-import que.sera.sera.android2022.model.todo.ToDo
-import java.time.LocalDateTime
 
 @ExperimentalMaterial3Api
 @Composable
@@ -37,20 +35,29 @@ fun DetailScreen(
     }
 
     val uiState = viewModel.uiState.collectAsState()
+    val cancel: () -> Unit = { navController.popBackStack() }
 
     when (val currentState = uiState.value) {
-        is DetailViewModelState.Loading ->
-            // TODO: 読み込み中画面作る
-            Text("読込中")
-        is DetailViewModelState.Input -> ReminderRegister(
-            initialToDoText = currentState.toDo.name,
-            onRegister = { toDo ->
-                viewModel.upsertToDo(toDo)
+        is DetailViewModelState.Loading -> ReminderRegister(
+            inputEnabled = false,
+            onCancel = cancel
+        )
+        is DetailViewModelState.InputInitial -> ReminderRegister(
+            buttonLabel = "登録する",
+            onRegister = { toDoText ->
+                viewModel.registerToDo(toDoText)
                 navController.popBackStack()
             },
-            onCancel = {
+            onCancel = cancel
+        )
+        is DetailViewModelState.InputEdit -> ReminderRegister(
+            initialToDoText = currentState.toDo.name,
+            buttonLabel = "更新する",
+            onRegister = { toDoText ->
+                viewModel.updateToDo(toDoText)
                 navController.popBackStack()
-            }
+            },
+            onCancel = cancel
         )
     }
 }
@@ -58,24 +65,21 @@ fun DetailScreen(
 @Composable
 fun ReminderRegister(
     modifier: Modifier = Modifier,
-    initialToDo: ToDo,
-    onRegister: (ToDo) -> Unit,
+    initialToDoText: String = "",
+    buttonLabel: String = "",
+    inputEnabled: Boolean = true,
+    onRegister: (String) -> Unit = {},
     onCancel: () -> Unit
 ) {
     var toDoText: TextFieldValue by remember {
         mutableStateOf(
             TextFieldValue(
-                text = initialToDo.name,
-                selection = TextRange(initialToDo.name.length)
+                text = initialToDoText,
+                selection = TextRange(initialToDoText.length)
             )
         )
     }
     val focusRequester = remember { FocusRequester() }
-
-    fun changedToDo(): ToDo = initialToDo.copy(
-        name = toDoText.text,
-        updated = LocalDateTime.now()
-    )
 
     Column(
         modifier = modifier
@@ -93,12 +97,13 @@ fun ReminderRegister(
             modifier = modifier
                 .fillMaxWidth()
                 .focusRequester(focusRequester),
+            enabled = inputEnabled,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Done
             ),
             keyboardActions = KeyboardActions(
-                onDone = { onRegister(changedToDo()) }
+                onDone = { onRegister(toDoText.text) }
             )
         )
 
@@ -108,12 +113,17 @@ fun ReminderRegister(
             modifier = modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            OutlinedButton(onClick = { onCancel() }) {
+            OutlinedButton(
+                onClick = { onCancel() }
+            ) {
                 Text(text = "キャンセル")
             }
 
-            Button(onClick = { onRegister(changedToDo()) }) {
-                Text(text = if (initialToDo.id == 0) "登録する" else "更新する")
+            Button(
+                onClick = { onRegister(toDoText.text) },
+                enabled = inputEnabled
+            ) {
+                Text(text = buttonLabel)
             }
         }
     }
@@ -129,7 +139,7 @@ fun ReminderRegister(
 fun PreviewReminderRegister() {
     Mdc3Theme {
         ReminderRegister(
-            initialToDo = ToDo(),
+            initialToDoText = "テスト",
             onRegister = { },
             onCancel = { }
         )

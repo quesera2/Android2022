@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import que.sera.sera.android2022.model.todo.ToDo
 import que.sera.sera.android2022.repository.todo.ToDoRepository
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,19 +21,33 @@ class DetailViewModel @Inject constructor(
     val uiState: StateFlow<DetailViewModelState> = _uiState
 
     fun fetchInitialToDo(id: Int) = viewModelScope.launch {
-        val result =
-            if (id == 0) ToDo()
-            else toDoRepository.getToDo(id) ?: throw IllegalArgumentException()
-        //TODO: ボトムシートとキーボードを同時に表示できないワークアラウンド
+        //TODO: ボトムシートとキーボードを同時に表示するためのワークアラウンド
         delay(200)
-        _uiState.value = DetailViewModelState.Input(result)
+        if (id == 0) {
+            _uiState.value = DetailViewModelState.InputInitial
+        } else {
+            val result = toDoRepository.getToDo(id) ?: throw IllegalArgumentException()
+            _uiState.value = DetailViewModelState.InputEdit(result)
+        }
     }
 
-    fun upsertToDo(toDo: ToDo) = viewModelScope.launch {
-        if (toDo.id == 0) {
-            toDoRepository.registerToDo(toDo)
-        } else {
-            toDoRepository.updateToDo(toDo)
+    fun registerToDo(toDoText: String) = viewModelScope.launch {
+        ToDo(name = toDoText).let { toDoRepository.registerToDo(it) }
+    }
+
+    fun updateToDo(toDoText: String) {
+        val state = uiState.value
+        if (state !is DetailViewModelState.InputEdit) {
+            throw IllegalStateException()
+        }
+
+        viewModelScope.launch {
+            state.toDo.copy(
+                name = toDoText,
+                updated = LocalDateTime.now()
+            ).let {
+                toDoRepository.updateToDo(it)
+            }
         }
     }
 }

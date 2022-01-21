@@ -6,6 +6,8 @@ sealed interface DetailViewModelState {
 
     object Loading : DetailViewModelState
 
-    data class Input(val toDo: ToDo) : DetailViewModelState
+    object InputInitial : DetailViewModelState
+
+    data class InputEdit(val toDo: ToDo) : DetailViewModelState
 
 }
