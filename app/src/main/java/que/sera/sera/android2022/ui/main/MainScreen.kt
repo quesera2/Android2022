@@ -19,12 +19,11 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
+import com.google.android.material.composethemeadapter3.Mdc3Theme
 import que.sera.sera.android2022.model.todo.ToDo
 import que.sera.sera.android2022.model.todo.ToDoStatus
 import que.sera.sera.android2022.ui.common.AppBar
-import java.time.LocalDateTime
+
 
 @ExperimentalMaterial3Api
 @Composable
@@ -46,8 +45,9 @@ fun MainScreen(
             }
         },
         content = {
+            val listItemsState = viewModel.getToDos().collectAsState(emptyList())
             ToDoListView(
-                listItems = viewModel.getToDos(),
+                listItems = listItemsState.value,
                 modifier = modifier,
                 onClick = {
                     navController.navigate("detail/${it.id}")
@@ -58,18 +58,15 @@ fun MainScreen(
 }
 
 
-@Preview
 @Composable
 @SuppressLint("ModifierParameter")
 fun ToDoListView(
     modifier: Modifier = Modifier,
-    listItems: Flow<List<ToDo>> = emptyFlow(),
+    listItems: List<ToDo>,
     onClick: (ToDo) -> Unit = { }
 ) {
-    val listItemsState = listItems.collectAsState(emptyList())
-
     LazyColumn {
-        items(listItemsState.value) {
+        items(listItems) {
             ToDoListItem(
                 listItem = it,
                 onClick = onClick
@@ -78,51 +75,62 @@ fun ToDoListView(
     }
 }
 
-private val testData =
-    ToDo(0, "テスト", ToDoStatus.Completed, LocalDateTime.now(), LocalDateTime.now())
-
-@Preview
 @Composable
 @SuppressLint("ModifierParameter")
 fun ToDoListItem(
-    listItem: ToDo = testData,
+    listItem: ToDo,
     modifier: Modifier = Modifier,
     onClick: (ToDo) -> Unit = { }
 ) {
-    Column(
-        modifier = modifier.clickable { onClick(listItem) }
-    ) {
-        Row(
-            modifier = modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+    Surface {
+        Column(
+            modifier = modifier.clickable { onClick(listItem) }
         ) {
-            Text(
-                text = "${listItem.name} id:${listItem.id}",
-                color = when (listItem.status) {
-                    ToDoStatus.Incomplete -> Color.DarkGray
-                    ToDoStatus.Completed -> Color.Gray
-                },
-                style = when (listItem.status) {
-                    ToDoStatus.Incomplete -> TextStyle.Default
-                    ToDoStatus.Completed -> TextStyle(
-                        textDecoration = TextDecoration.LineThrough,
-                        color = Color.Gray
-                    )
-                }
-            )
-            Spacer(
-                modifier = Modifier.weight(1f)
-            )
-            Icon(
-                Icons.Filled.Check,
-                contentDescription = "タスク状態",
-                tint = when (listItem.status) {
-                    ToDoStatus.Incomplete -> Color.Transparent
-                    ToDoStatus.Completed -> Color.LightGray
-                }
-            )
+            Row(
+                modifier = modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = listItem.name,
+                    color = when (listItem.status) {
+                        ToDoStatus.Incomplete -> MaterialTheme.colorScheme.onSurface
+                        ToDoStatus.Completed -> MaterialTheme.colorScheme.secondary
+                    },
+                    style = when (listItem.status) {
+                        ToDoStatus.Incomplete -> TextStyle.Default
+                        ToDoStatus.Completed -> TextStyle(
+                            textDecoration = TextDecoration.LineThrough,
+                            color = MaterialTheme.colorScheme.secondary
+                        )
+                    }
+                )
+                Spacer(
+                    modifier = Modifier.weight(1f)
+                )
+                Icon(
+                    Icons.Filled.Check,
+                    contentDescription = "タスク状態",
+                    tint = when (listItem.status) {
+                        ToDoStatus.Incomplete -> Color.Transparent
+                        ToDoStatus.Completed -> MaterialTheme.colorScheme.secondary
+                    }
+                )
+            }
         }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewToDoList() {
+    Mdc3Theme {
+        ToDoListView(
+            listItems = listOf(
+                ToDo(0, "完了", ToDoStatus.Completed),
+                ToDo(0, "未完了", ToDoStatus.Incomplete),
+            )
+        )
     }
 }
