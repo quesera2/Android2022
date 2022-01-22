@@ -1,10 +1,10 @@
 package que.sera.sera.android2022
 
-import androidx.room.Dao
 import io.mockk.*
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -49,13 +49,14 @@ class ToDoRepositoryImplTest {
     }
 
     @Test
-    fun testGetTodo() {
-        every { dao.findById(12) } returns ToDo(12, "テスト")
+    fun testGetTodo() = runBlocking {
+        coEvery { dao.findById(12) } returns ToDo(12, "テスト")
         val actual = repository.getToDo(12)
-        verify(exactly = 1) { dao.findById(12) }
+        coVerify(exactly = 1) { dao.findById(12) }
         confirmVerified(dao)
 
-        assertThat(actual.name, equalTo("テスト"))
+        assertThat(actual, notNullValue())
+        assertThat(actual!!.name, equalTo("テスト"))
         assertThat(actual.id, equalTo(12))
     }
 
