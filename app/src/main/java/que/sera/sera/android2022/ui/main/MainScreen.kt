@@ -1,14 +1,23 @@
 package que.sera.sera.android2022.ui.main
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.*
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -55,6 +64,9 @@ fun MainScreen(
                 modifier = modifier,
                 onClick = {
                     navController.navigate("detail/${it.id}")
+                },
+                onSwipe = {
+                    viewModel.doneToDo(it)
                 }
             )
         }
@@ -62,18 +74,47 @@ fun MainScreen(
 }
 
 
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
 @SuppressLint("ModifierParameter")
 fun ToDoListView(
     modifier: Modifier = Modifier,
     listItems: List<ToDo>,
-    onClick: (ToDo) -> Unit = { }
+    onClick: (ToDo) -> Unit = { },
+    onSwipe: (ToDo) -> Unit = { },
 ) {
     LazyColumn {
-        items(listItems) {
-            ToDoListItem(
-                listItem = it,
-                onClick = onClick
+        items(listItems) { item ->
+            val dismissState = rememberDismissState(
+                confirmStateChange = {
+                    if (item.status == ToDoStatus.Completed) return@rememberDismissState false
+                    if (it == DismissValue.DismissedToEnd || it == DismissValue.DismissedToStart) {
+                        onSwipe(item)
+                    }
+                    true
+                }
+            )
+            SwipeToDismiss(
+                state = dismissState,
+                background = {
+                    Box(
+                        Modifier
+                            .fillMaxSize()
+                            .background(Color.LightGray)
+                    )
+                },
+                dismissContent = {
+                    Card(
+                        elevation = animateDpAsState(
+                            if (dismissState.dismissDirection != null) 4.dp else 0.dp
+                        ).value
+                    ) {
+                        ToDoListItem(
+                            listItem = item,
+                            onClick = onClick,
+                        )
+                    }
+                }
             )
         }
     }
@@ -84,54 +125,51 @@ fun ToDoListView(
 fun ToDoListItem(
     modifier: Modifier = Modifier,
     listItem: ToDo,
-    onClick: (ToDo) -> Unit = { }
+    onClick: (ToDo) -> Unit = { },
 ) {
     Surface {
-        Column(
-            modifier = modifier.clickable { onClick(listItem) }
+        Row(
+            modifier = modifier
+                .clickable { onClick(listItem) }
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                modifier = modifier
-                    .padding(16.dp)
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column {
-                    Text(
-                        text = listItem.name,
-                        color = when (listItem.status) {
-                            ToDoStatus.Incomplete -> MaterialTheme.colorScheme.onSurface
-                            ToDoStatus.Completed -> MaterialTheme.colorScheme.secondary
-                        },
-                        fontWeight = FontWeight.Bold,
-                        style = when (listItem.status) {
-                            ToDoStatus.Incomplete -> TextStyle.Default
-                            ToDoStatus.Completed -> TextStyle(
-                                textDecoration = TextDecoration.LineThrough,
-                                color = MaterialTheme.colorScheme.secondary
-                            )
-                        }
-                    )
-                    Text(
-                        text = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
-                            .withLocale(Locale.getDefault())
-                            .format(listItem.updated),
-                        color = MaterialTheme.colorScheme.tertiary,
-                        fontSize = MaterialTheme.typography.labelSmall.fontSize
-                    )
-                }
-                Spacer(
-                    modifier = Modifier.weight(1f)
-                )
-                Icon(
-                    Icons.Filled.Check,
-                    contentDescription = "タスク状態",
-                    tint = when (listItem.status) {
-                        ToDoStatus.Incomplete -> Color.Transparent
+            Column {
+                Text(
+                    text = listItem.name,
+                    color = when (listItem.status) {
+                        ToDoStatus.Incomplete -> MaterialTheme.colorScheme.onSurface
                         ToDoStatus.Completed -> MaterialTheme.colorScheme.secondary
+                    },
+                    fontWeight = FontWeight.Bold,
+                    style = when (listItem.status) {
+                        ToDoStatus.Incomplete -> TextStyle.Default
+                        ToDoStatus.Completed -> TextStyle(
+                            textDecoration = TextDecoration.LineThrough,
+                            color = MaterialTheme.colorScheme.secondary
+                        )
                     }
                 )
+                Text(
+                    text = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+                        .withLocale(Locale.getDefault())
+                        .format(listItem.updated),
+                    color = MaterialTheme.colorScheme.tertiary,
+                    fontSize = MaterialTheme.typography.labelSmall.fontSize
+                )
             }
+            Spacer(
+                modifier = Modifier.weight(1f)
+            )
+            Icon(
+                Icons.Filled.Check,
+                contentDescription = "タスク状態",
+                tint = when (listItem.status) {
+                    ToDoStatus.Incomplete -> Color.Transparent
+                    ToDoStatus.Completed -> MaterialTheme.colorScheme.secondary
+                }
+            )
         }
     }
 }
