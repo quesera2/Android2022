@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,6 +24,9 @@ import com.google.android.material.composethemeadapter3.Mdc3Theme
 import que.sera.sera.android2022.model.todo.ToDo
 import que.sera.sera.android2022.model.todo.ToDoStatus
 import que.sera.sera.android2022.ui.common.AppBar
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+import java.util.*
 
 
 @ExperimentalMaterial3Api
@@ -78,8 +82,8 @@ fun ToDoListView(
 @Composable
 @SuppressLint("ModifierParameter")
 fun ToDoListItem(
-    listItem: ToDo,
     modifier: Modifier = Modifier,
+    listItem: ToDo,
     onClick: (ToDo) -> Unit = { }
 ) {
     Surface {
@@ -92,20 +96,30 @@ fun ToDoListItem(
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = listItem.name,
-                    color = when (listItem.status) {
-                        ToDoStatus.Incomplete -> MaterialTheme.colorScheme.onSurface
-                        ToDoStatus.Completed -> MaterialTheme.colorScheme.secondary
-                    },
-                    style = when (listItem.status) {
-                        ToDoStatus.Incomplete -> TextStyle.Default
-                        ToDoStatus.Completed -> TextStyle(
-                            textDecoration = TextDecoration.LineThrough,
-                            color = MaterialTheme.colorScheme.secondary
-                        )
-                    }
-                )
+                Column {
+                    Text(
+                        text = listItem.name,
+                        color = when (listItem.status) {
+                            ToDoStatus.Incomplete -> MaterialTheme.colorScheme.onSurface
+                            ToDoStatus.Completed -> MaterialTheme.colorScheme.secondary
+                        },
+                        fontWeight = FontWeight.Bold,
+                        style = when (listItem.status) {
+                            ToDoStatus.Incomplete -> TextStyle.Default
+                            ToDoStatus.Completed -> TextStyle(
+                                textDecoration = TextDecoration.LineThrough,
+                                color = MaterialTheme.colorScheme.secondary
+                            )
+                        }
+                    )
+                    Text(
+                        text = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+                            .withLocale(Locale.getDefault())
+                            .format(listItem.updated),
+                        color = MaterialTheme.colorScheme.tertiary,
+                        fontSize = MaterialTheme.typography.labelSmall.fontSize
+                    )
+                }
                 Spacer(
                     modifier = Modifier.weight(1f)
                 )
