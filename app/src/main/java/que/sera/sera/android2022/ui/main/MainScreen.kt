@@ -2,6 +2,7 @@ package que.sera.sera.android2022.ui.main
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,7 +23,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -84,7 +87,7 @@ fun ToDoListView(
     onSwipe: (ToDo) -> Unit = { },
 ) {
     LazyColumn {
-        items(listItems) { item ->
+        items(listItems, key = { it.id }) { item ->
             val dismissState = rememberDismissState(
                 confirmStateChange = {
                     if (item.status == ToDoStatus.Completed) return@rememberDismissState false
@@ -96,6 +99,7 @@ fun ToDoListView(
             )
             SwipeToDismiss(
                 state = dismissState,
+                modifier = Modifier.animateItemPlacement(),
                 background = {
                     Box(
                         Modifier
@@ -104,16 +108,10 @@ fun ToDoListView(
                     )
                 },
                 dismissContent = {
-                    Card(
-                        elevation = animateDpAsState(
-                            if (dismissState.dismissDirection != null) 4.dp else 0.dp
-                        ).value
-                    ) {
-                        ToDoListItem(
-                            listItem = item,
-                            onClick = onClick,
-                        )
-                    }
+                    ToDoListItem(
+                        listItem = item,
+                        onClick = onClick,
+                    )
                 }
             )
         }
