@@ -133,10 +133,15 @@ fun ToDoListView(
                     }
                 },
                 dismissContent = {
-                    ToDoListItem(
-                        listItem = item,
-                        onClick = onClick,
-                    )
+                    when (item.status) {
+                        ToDoStatus.Incomplete -> InCompleteToDoListItem(
+                            toDo = item,
+                            onClick = onClick
+                        )
+                        ToDoStatus.Completed -> CompletedToDoListItem(
+                            toDo = item
+                        )
+                    }
                 }
             )
         }
@@ -145,39 +150,61 @@ fun ToDoListView(
 
 @Composable
 @SuppressLint("ModifierParameter")
-fun ToDoListItem(
+fun InCompleteToDoListItem(
     modifier: Modifier = Modifier,
-    listItem: ToDo,
-    onClick: (ToDo) -> Unit = { },
+    toDo: ToDo,
+    onClick: (ToDo) -> Unit
+) {
+    Surface {
+        Column(
+            modifier = modifier
+                .clickable { onClick(toDo) }
+                .padding(16.dp)
+                .fillMaxWidth(),
+        ) {
+            Text(
+                text = toDo.name,
+                color = MaterialTheme.colorScheme.onSurface,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+                    .withLocale(Locale.getDefault())
+                    .format(toDo.updated),
+                color = MaterialTheme.colorScheme.tertiary,
+                fontSize = MaterialTheme.typography.labelSmall.fontSize
+            )
+        }
+    }
+}
+
+@Composable
+@SuppressLint("ModifierParameter")
+fun CompletedToDoListItem(
+    modifier: Modifier = Modifier,
+    toDo: ToDo
 ) {
     Surface {
         Row(
             modifier = modifier
-                .clickable { onClick(listItem) }
                 .padding(16.dp)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column {
                 Text(
-                    text = listItem.name,
-                    color = when (listItem.status) {
-                        ToDoStatus.Incomplete -> MaterialTheme.colorScheme.onSurface
-                        ToDoStatus.Completed -> MaterialTheme.colorScheme.secondary
-                    },
-                    fontWeight = FontWeight.Bold,
-                    style = when (listItem.status) {
-                        ToDoStatus.Incomplete -> TextStyle.Default
-                        ToDoStatus.Completed -> TextStyle(
-                            textDecoration = TextDecoration.LineThrough,
-                            color = MaterialTheme.colorScheme.secondary
-                        )
-                    }
+                    text = toDo.name,
+                    color = MaterialTheme.colorScheme.secondary,
+                    style = TextStyle(
+                        textDecoration = TextDecoration.LineThrough,
+                        color = MaterialTheme.colorScheme.secondary
+
+                    )
                 )
                 Text(
                     text = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
                         .withLocale(Locale.getDefault())
-                        .format(listItem.updated),
+                        .format(toDo.updated),
                     color = MaterialTheme.colorScheme.tertiary,
                     fontSize = MaterialTheme.typography.labelSmall.fontSize
                 )
@@ -188,10 +215,7 @@ fun ToDoListItem(
             Icon(
                 Icons.Filled.Check,
                 contentDescription = "タスク状態",
-                tint = when (listItem.status) {
-                    ToDoStatus.Incomplete -> Color.Transparent
-                    ToDoStatus.Completed -> MaterialTheme.colorScheme.secondary
-                }
+                tint = MaterialTheme.colorScheme.secondary
             )
         }
     }
