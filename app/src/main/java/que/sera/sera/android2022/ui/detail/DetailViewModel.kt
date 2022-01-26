@@ -3,7 +3,6 @@ package que.sera.sera.android2022.ui.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -21,8 +20,6 @@ class DetailViewModel @Inject constructor(
     val uiState: StateFlow<DetailViewModelState> = _uiState
 
     fun fetchInitialToDo(id: Int) = viewModelScope.launch {
-        //TODO: ボトムシートとキーボードを同時に表示するためのワークアラウンド
-        delay(200)
         if (id == 0) {
             _uiState.value = DetailViewModelState.InputInitial
         } else {
