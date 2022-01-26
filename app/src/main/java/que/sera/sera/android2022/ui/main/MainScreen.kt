@@ -97,6 +97,12 @@ fun ToDoListView(
                     false
                 }
             )
+            if (dismissState.currentValue != DismissValue.Default) {
+                LaunchedEffect(Unit) {
+                    dismissState.snapTo(DismissValue.Default)
+                }
+            }
+
             SwipeToDismiss(
                 state = dismissState,
                 modifier = Modifier.animateItemPlacement(),
