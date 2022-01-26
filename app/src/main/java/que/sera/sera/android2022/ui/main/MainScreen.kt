@@ -1,7 +1,7 @@
 package que.sera.sera.android2022.ui.main
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -9,23 +9,23 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
+import androidx.compose.material.DismissValue
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.rememberDismissState
 import androidx.compose.material3.*
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -90,22 +90,41 @@ fun ToDoListView(
         items(listItems, key = { it.id }) { item ->
             val dismissState = rememberDismissState(
                 confirmStateChange = {
-                    if (item.status == ToDoStatus.Completed) return@rememberDismissState false
-                    if (it == DismissValue.DismissedToEnd || it == DismissValue.DismissedToStart) {
+                    if (item.status == ToDoStatus.Incomplete && it == DismissValue.DismissedToEnd) {
                         onSwipe(item)
+                        return@rememberDismissState true
                     }
-                    true
+                    false
                 }
             )
             SwipeToDismiss(
                 state = dismissState,
                 modifier = Modifier.animateItemPlacement(),
                 background = {
+                    val color by animateColorAsState(
+                        when (dismissState.targetValue) {
+                            DismissValue.Default -> MaterialTheme.colorScheme.background
+                            DismissValue.DismissedToEnd -> Color.Green
+                            DismissValue.DismissedToStart -> MaterialTheme.colorScheme.background
+                        }
+                    )
+                    val scale by animateFloatAsState(
+                        if (dismissState.targetValue == DismissValue.Default) 0.75f else 1f
+                    )
+
                     Box(
                         Modifier
                             .fillMaxSize()
-                            .background(Color.LightGray)
-                    )
+                            .background(color)
+                            .padding(horizontal = 20.dp),
+                        contentAlignment = Alignment.CenterStart
+                    ) {
+                        Icon(
+                            Icons.Default.Done,
+                            contentDescription = "check mark",
+                            modifier = Modifier.scale(scale)
+                        )
+                    }
                 },
                 dismissContent = {
                     ToDoListItem(
