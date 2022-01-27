@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -38,7 +39,6 @@ import que.sera.sera.android2022.model.todo.ToDoStatus
 import que.sera.sera.android2022.ui.common.AppBar
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
-import java.util.*
 
 
 @ExperimentalMaterial3Api
@@ -86,6 +86,11 @@ fun ToDoListView(
     onClick: (ToDo) -> Unit = { },
     onSwipe: (ToDo) -> Unit = { },
 ) {
+    val locale = LocalContext.current.resources.configuration.locales[0]
+    val formatter = DateTimeFormatter
+        .ofLocalizedDateTime(FormatStyle.MEDIUM)
+        .withLocale(locale)
+
     LazyColumn {
         items(listItems, key = { it.id }) { item ->
             val dismissState = rememberDismissState(
@@ -136,10 +141,12 @@ fun ToDoListView(
                     when (item.status) {
                         ToDoStatus.Incomplete -> InCompleteToDoListItem(
                             toDo = item,
+                            formatter = formatter,
                             onClick = onClick
                         )
                         ToDoStatus.Completed -> CompletedToDoListItem(
-                            toDo = item
+                            toDo = item,
+                            formatter = formatter
                         )
                     }
                 }
@@ -153,6 +160,7 @@ fun ToDoListView(
 fun InCompleteToDoListItem(
     modifier: Modifier = Modifier,
     toDo: ToDo,
+    formatter: DateTimeFormatter,
     onClick: (ToDo) -> Unit
 ) {
     Surface {
@@ -168,9 +176,7 @@ fun InCompleteToDoListItem(
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
-                    .withLocale(Locale.getDefault())
-                    .format(toDo.updated),
+                text = formatter.format(toDo.updated),
                 color = MaterialTheme.colorScheme.tertiary,
                 fontSize = MaterialTheme.typography.labelSmall.fontSize
             )
@@ -182,6 +188,7 @@ fun InCompleteToDoListItem(
 @SuppressLint("ModifierParameter")
 fun CompletedToDoListItem(
     modifier: Modifier = Modifier,
+    formatter: DateTimeFormatter,
     toDo: ToDo
 ) {
     Surface {
@@ -202,9 +209,7 @@ fun CompletedToDoListItem(
                     )
                 )
                 Text(
-                    text = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
-                        .withLocale(Locale.getDefault())
-                        .format(toDo.updated),
+                    text = formatter.format(toDo.updated),
                     color = MaterialTheme.colorScheme.tertiary,
                     fontSize = MaterialTheme.typography.labelSmall.fontSize
                 )
