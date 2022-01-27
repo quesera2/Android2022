@@ -113,8 +113,7 @@ fun ReminderRegister(
             keyboardActions = KeyboardActions(
                 onDone = { onRegister(toDoText.text) }
             ),
-            singleLine = true,
-            maxLines = 1
+            singleLine = true
         )
 
         Spacer(modifier = modifier.height(16.dp))
