@@ -18,14 +18,12 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.rememberDismissState
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -36,7 +34,6 @@ import androidx.navigation.NavController
 import com.google.android.material.composethemeadapter3.Mdc3Theme
 import que.sera.sera.android2022.model.todo.ToDo
 import que.sera.sera.android2022.model.todo.ToDoStatus
-import que.sera.sera.android2022.ui.common.AppBar
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
@@ -49,8 +46,17 @@ fun MainScreen(
     viewModel: MainViewModel,
     navController: NavController,
 ) {
+    val scrollBehavior = remember { TopAppBarDefaults.enterAlwaysScrollBehavior() }
+
     Scaffold(
-        topBar = { AppBar() },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            SmallTopAppBar(
+                modifier = modifier,
+                title = { Text(text = "タスク一覧") },
+                scrollBehavior = scrollBehavior
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
