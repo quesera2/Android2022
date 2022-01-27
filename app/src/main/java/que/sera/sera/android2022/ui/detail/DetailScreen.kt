@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.TextRange
@@ -87,13 +88,15 @@ fun ReminderRegister(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "やること",
-            modifier = modifier.fillMaxWidth()
-        )
         OutlinedTextField(
             value = toDoText,
             onValueChange = { toDoText = it },
+            placeholder = {
+                Text(
+                    text = "やること（例：掃除）",
+                    modifier = Modifier.alpha(0.6f)
+                )
+            },
             modifier = modifier
                 .fillMaxWidth()
                 .focusRequester(focusRequester),
