@@ -5,7 +5,7 @@ import que.sera.sera.android2022.model.todo.ToDo
 
 interface ToDoRepository {
 
-    fun getToDos(): Flow<List<ToDo>>
+    fun getToDos(showComplete: Boolean): Flow<List<ToDo>>
 
     suspend fun getToDo(id: Int): ToDo?
 

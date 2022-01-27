@@ -12,6 +12,9 @@ interface ToDoDao {
     @Query("SELECT * FROM todo ORDER BY CASE status WHEN 'Incomplete' THEN 0 ELSE 1 END, updated DESC")
     fun getAll(): Flow<List<ToDo>>
 
+    @Query("SELECT * FROM todo WHERE status == 'Incomplete' ORDER BY updated DESC")
+    fun getIncomplete(): Flow<List<ToDo>>
+
     @Query("SELECT * FROM todo WHERE id = :id LIMIT 1")
     suspend fun findById(id: Int): ToDo?
 

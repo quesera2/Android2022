@@ -8,7 +8,8 @@ class ToDoRepositoryImpl(
     private val dao: ToDoDao
 ) : ToDoRepository {
 
-    override fun getToDos(): Flow<List<ToDo>> = dao.getAll()
+    override fun getToDos(showComplete: Boolean): Flow<List<ToDo>> =
+        if (showComplete) dao.getAll() else dao.getIncomplete()
 
     override suspend fun getToDo(id: Int): ToDo? = dao.findById(id)
 
