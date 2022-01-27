@@ -11,6 +11,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import que.sera.sera.android2022.repository.pref.PreferencesRepository
+import que.sera.sera.android2022.repository.pref.PreferencesRepositoryImpl
 import que.sera.sera.android2022.repository.todo.ToDoRepository
 import que.sera.sera.android2022.repository.todo.ToDoRepositoryImpl
 import que.sera.sera.android2022.room.AppDatabase
@@ -48,4 +50,10 @@ object AppModule {
             context.preferencesDataStoreFile("settings")
         }
     )
+
+    @Singleton
+    @Provides
+    fun providePreferencesRepository(
+        dataStore: DataStore<Preferences>
+    ): PreferencesRepository = PreferencesRepositoryImpl(dataStore)
 }
