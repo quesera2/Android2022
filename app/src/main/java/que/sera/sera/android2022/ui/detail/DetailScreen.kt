@@ -125,7 +125,7 @@ fun ReminderRegister(
 
             Button(
                 onClick = { onRegister(toDoText.text) },
-                enabled = inputEnabled
+                enabled = inputEnabled && toDoText.text.isNotEmpty()
             ) {
                 Text(text = buttonLabel)
             }
