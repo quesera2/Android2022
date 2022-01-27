@@ -19,11 +19,19 @@ class MainViewModel @Inject constructor(
     private val toDoRepository: ToDoRepository,
     private val prefRepository: PreferencesRepository,
 ) : ViewModel() {
+
+    val showCompletedTask: Flow<Boolean>
+        get() = prefRepository.showCompletedTask
+
     fun getToDos(): Flow<List<ToDo>> = prefRepository
         .showCompletedTask
         .flatMapLatest { showCompleteTask ->
             toDoRepository.getToDos(showCompleteTask)
         }
+
+    fun updateShowCompleteTask(newValue: Boolean) = viewModelScope.launch {
+        prefRepository.updateShowCompletedTask(newValue)
+    }
 
     fun doneToDo(toDo: ToDo) = viewModelScope.launch {
         toDo.copy(

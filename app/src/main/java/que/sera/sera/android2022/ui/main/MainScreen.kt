@@ -15,7 +15,9 @@ import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.rememberDismissState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -51,11 +53,11 @@ fun MainScreen(
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            SmallTopAppBar(
-                modifier = modifier,
-                title = { Text(text = "タスク一覧") },
-                scrollBehavior = scrollBehavior
-            )
+            val showTaskCompleted = viewModel.showCompletedTask.collectAsState(initial = false)
+            AppBar(
+                scrollBehavior = scrollBehavior,
+                showCompletedTask = showTaskCompleted.value,
+                onClick = { viewModel.updateShowCompleteTask(it) })
         },
         floatingActionButton = {
             FloatingActionButton(
@@ -79,6 +81,29 @@ fun MainScreen(
                 }
             )
         }
+    )
+}
+
+@Composable
+fun AppBar(
+    modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior,
+    showCompletedTask: Boolean,
+    onClick: (Boolean) -> Unit
+) {
+    SmallTopAppBar(
+        modifier = modifier,
+        title = { Text(text = "タスク一覧") },
+        actions = {
+            IconButton(onClick = { onClick(!showCompletedTask) }) {
+                Icon(
+                    imageVector = if (showCompletedTask) Icons.Filled.CheckCircle
+                    else Icons.Outlined.CheckCircle,
+                    contentDescription = "タスク完了表示を切り替える"
+                )
+            }
+        },
+        scrollBehavior = scrollBehavior
     )
 }
 
