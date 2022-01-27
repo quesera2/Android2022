@@ -111,7 +111,12 @@ fun ReminderRegister(
                 imeAction = ImeAction.Done
             ),
             keyboardActions = KeyboardActions(
-                onDone = { onRegister(toDoText.text) }
+                onDone = {
+                    if (toDoText.text.isNotEmpty()) {
+                        focusRequester.freeFocus()
+                        onRegister(toDoText.text)
+                    }
+                }
             ),
             singleLine = true
         )
