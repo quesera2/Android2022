@@ -90,7 +90,12 @@ fun ReminderRegister(
     ) {
         OutlinedTextField(
             value = toDoText,
-            onValueChange = { toDoText = it },
+            onValueChange = { newValue ->
+                // singleLineやmaxLineを無視して改行が入ってしまうため対策
+                if (!newValue.text.contains("\n")) {
+                    toDoText = newValue
+                }
+            },
             placeholder = {
                 Text(
                     text = "やること（例：掃除）",
@@ -108,7 +113,8 @@ fun ReminderRegister(
             keyboardActions = KeyboardActions(
                 onDone = { onRegister(toDoText.text) }
             ),
-            singleLine = true
+            singleLine = true,
+            maxLines = 1
         )
 
         Spacer(modifier = modifier.height(16.dp))
