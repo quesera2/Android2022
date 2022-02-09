@@ -16,7 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.icons.outlined.FilterList
 import androidx.compose.material.rememberDismissState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -26,6 +25,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.android.material.composethemeadapter3.Mdc3Theme
+import que.sera.sera.android2022.R
 import que.sera.sera.android2022.model.todo.ToDo
 import que.sera.sera.android2022.model.todo.ToDoStatus
 import java.time.format.DateTimeFormatter
@@ -96,7 +97,7 @@ fun AppBar(
         actions = {
             IconButton(onClick = { onClick(!showCompletedTask) }) {
                 Icon(
-                    imageVector = Icons.Outlined.FilterList,
+                    painter = painterResource(id = R.drawable.ic_baseline_filter_list_24),
                     contentDescription = "タスク完了表示を切り替える",
                     tint = if (showCompletedTask) MaterialTheme.colorScheme.primary.copy(0.4f)
                     else MaterialTheme.colorScheme.primary

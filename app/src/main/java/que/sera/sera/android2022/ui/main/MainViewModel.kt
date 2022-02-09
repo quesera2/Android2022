@@ -25,7 +25,7 @@ class MainViewModel @Inject constructor(
     val showCompletedTask: Flow<Boolean>
         get() = prefRepository
             .showCompletedTask
-            .stateIn(viewModelScope, SharingStarted.Lazily, false)
+            .stateIn(viewModelScope, SharingStarted.Lazily, true)
 
     fun getToDos(): Flow<List<ToDo>> = showCompletedTask
         .flatMapLatest { showCompleteTask ->
