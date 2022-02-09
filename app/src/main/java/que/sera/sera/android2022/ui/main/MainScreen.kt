@@ -13,11 +13,11 @@ import androidx.compose.material.DismissValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.FilterAlt
+import androidx.compose.material.icons.outlined.FilterList
+import androidx.compose.material.icons.outlined.FilterNone
 import androidx.compose.material.rememberDismissState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -97,9 +97,10 @@ fun AppBar(
         actions = {
             IconButton(onClick = { onClick(!showCompletedTask) }) {
                 Icon(
-                    imageVector = if (showCompletedTask) Icons.Filled.CheckCircle
-                    else Icons.Outlined.CheckCircle,
-                    contentDescription = "タスク完了表示を切り替える"
+                    imageVector =  Icons.Outlined.FilterList,
+                    contentDescription = "タスク完了表示を切り替える",
+                    tint = if(showCompletedTask) MaterialTheme.colorScheme.primary.copy(0.4f)
+                    else MaterialTheme.colorScheme.primary
                 )
             }
         },
