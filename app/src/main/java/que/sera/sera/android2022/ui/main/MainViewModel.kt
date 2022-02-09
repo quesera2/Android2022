@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import que.sera.sera.android2022.model.todo.ToDo
 import que.sera.sera.android2022.model.todo.ToDoStatus
@@ -21,10 +23,11 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     val showCompletedTask: Flow<Boolean>
-        get() = prefRepository.showCompletedTask
+        get() = prefRepository
+            .showCompletedTask
+            .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
-    fun getToDos(): Flow<List<ToDo>> = prefRepository
-        .showCompletedTask
+    fun getToDos(): Flow<List<ToDo>> = showCompletedTask
         .flatMapLatest { showCompleteTask ->
             toDoRepository.getToDos(showCompleteTask)
         }
