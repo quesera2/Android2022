@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -86,6 +87,10 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
 
     implementation "androidx.datastore:datastore-preferences:1.0.0"
+
+    implementation platform('com.google.firebase:firebase-bom:29.1.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
 
     testImplementation "io.mockk:mockk:1.12.2"
 }

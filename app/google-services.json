@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "240424476738",
+    "project_id": "androidpractice2022",
+    "storage_bucket": "androidpractice2022.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:240424476738:android:ce6886d8d7a88ec95e8ddb",
+        "android_client_info": {
+          "package_name": "que.sera.sera.android2022"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "240424476738-1g4is7ptdk7lvsjqpqhnlci5d6qn4s28.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "que.sera.sera.android2022",
+            "certificate_hash": "c7251cb70b6fc680af23f87d1518659019180eb8"
+          }
+        },
+        {
+          "client_id": "240424476738-nsir18drfg81bkk39mhprghdi2oc0sfk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRrPPXOtYsIX2TrZDugG3C59chjKc_tZ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "240424476738-nsir18drfg81bkk39mhprghdi2oc0sfk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
