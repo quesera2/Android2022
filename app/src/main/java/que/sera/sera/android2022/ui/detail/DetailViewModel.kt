@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import que.sera.sera.android2022.model.todo.ToDo
 import que.sera.sera.android2022.repository.todo.ToDoRepository
-import java.time.LocalDateTime
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,7 +41,8 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             state.toDo.copy(
                 name = toDoText,
-                updated = LocalDateTime.now()
+//                updated = LocalDateTime.now()
+                updated = Date()
             ).let {
                 toDoRepository.updateToDo(it)
             }

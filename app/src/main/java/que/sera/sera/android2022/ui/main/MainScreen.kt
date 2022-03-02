@@ -1,6 +1,8 @@
 package que.sera.sera.android2022.ui.main
 
 import android.annotation.SuppressLint
+import android.text.format.DateFormat
+import android.text.format.DateUtils
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -36,6 +38,7 @@ import com.google.android.material.composethemeadapter3.Mdc3Theme
 import que.sera.sera.android2022.R
 import que.sera.sera.android2022.model.todo.ToDo
 import que.sera.sera.android2022.model.todo.ToDoStatus
+import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
@@ -119,9 +122,10 @@ fun ToDoListView(
     onSwipe: (ToDo) -> Unit = { },
 ) {
     val locale = LocalContext.current.resources.configuration.locales[0]
-    val formatter = DateTimeFormatter
-        .ofLocalizedDateTime(FormatStyle.MEDIUM)
-        .withLocale(locale)
+//    val formatter = DateTimeFormatter
+//        .ofLocalizedDateTime(FormatStyle.MEDIUM)
+//        .withLocale(locale)
+    val formatter = SimpleDateFormat(DateFormat.getBestDateTimePattern(locale, "yyyyMMMdd"), locale)
 
     LazyColumn {
         items(listItems, key = { it.id }) { item ->
@@ -192,7 +196,7 @@ fun ToDoListView(
 fun InCompleteToDoListItem(
     modifier: Modifier = Modifier,
     toDo: ToDo,
-    formatter: DateTimeFormatter,
+    formatter: SimpleDateFormat,
     onClick: (ToDo) -> Unit
 ) {
     Surface {
@@ -220,7 +224,7 @@ fun InCompleteToDoListItem(
 @SuppressLint("ModifierParameter")
 fun CompletedToDoListItem(
     modifier: Modifier = Modifier,
-    formatter: DateTimeFormatter,
+    formatter: SimpleDateFormat,
     toDo: ToDo
 ) {
     Surface {

@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,6 +15,7 @@ import dagger.hilt.components.SingletonComponent
 import que.sera.sera.android2022.repository.pref.PreferencesRepository
 import que.sera.sera.android2022.repository.pref.PreferencesRepositoryImpl
 import que.sera.sera.android2022.repository.todo.ToDoRepository
+import que.sera.sera.android2022.repository.todo.ToDoRepositoryFirebaseImpl
 import que.sera.sera.android2022.repository.todo.ToDoRepositoryImpl
 import que.sera.sera.android2022.room.AppDatabase
 import que.sera.sera.android2022.room.ToDoDao
@@ -37,9 +39,20 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideFireStore() = FirebaseFirestore.getInstance()
+
+//    @Singleton
+//    @Provides
+//    fun provideToDoRepository(
+//        dao: ToDoDao
+//    ): ToDoRepository = ToDoRepositoryImpl(dao)
+
+
+    @Singleton
+    @Provides
     fun provideToDoRepository(
-        dao: ToDoDao
-    ): ToDoRepository = ToDoRepositoryImpl(dao)
+        db: FirebaseFirestore
+    ): ToDoRepository = ToDoRepositoryFirebaseImpl(db)
 
     @Singleton
     @Provides

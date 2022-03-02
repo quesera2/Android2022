@@ -3,8 +3,7 @@ package que.sera.sera.android2022.model.todo
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit
+import java.util.*
 
 @Entity
 data class ToDo(
@@ -15,7 +14,7 @@ data class ToDo(
     @ColumnInfo(index = true)
     val status: ToDoStatus = ToDoStatus.Incomplete,
     @ColumnInfo
-    val updated: LocalDateTime = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS),
+    val updated: Date = Date(),
     @ColumnInfo
-    val created: LocalDateTime = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS)
+    val created: Date = Date()
 )
