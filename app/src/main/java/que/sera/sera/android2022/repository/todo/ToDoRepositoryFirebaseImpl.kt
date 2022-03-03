@@ -1,7 +1,9 @@
 package que.sera.sera.android2022.repository.todo
 
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -22,6 +24,7 @@ class ToDoRepositoryFirebaseImpl @Inject constructor(
         showComplete: Boolean
     ): Flow<List<ToDo>> = callbackFlow {
         val callback = fireStore.collection("todo")
+            .orderBy("status", Query.Direction.DESCENDING)
             .orderBy("updated", Query.Direction.DESCENDING)
             .addSnapshotListener { value, error ->
                 value?.documents?.mapNotNull {
@@ -86,6 +89,36 @@ class ToDoRepositoryFirebaseImpl @Inject constructor(
     }
 
     override suspend fun updateToDo(todo: ToDo) {
-        TODO("Not yet implemented")
+        val documentRef = getDocumentRef(todo.id)
+        updateInner(documentRef = documentRef, todo = todo)
+    }
+
+    private suspend fun getDocumentRef(
+        id: Int
+    ) = suspendCoroutine<DocumentReference> { continuation ->
+        fireStore.collection("todo")
+            .whereEqualTo("id", id)
+            .get()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val documentRef = it.result.documents.first().reference
+                    continuation.resume(documentRef)
+                } else {
+                    continuation.resumeWithException(it.exception!!)
+                }
+            }
+    }
+
+    private suspend fun updateInner(
+        documentRef: DocumentReference,
+        todo: ToDo
+    ) = suspendCoroutine<Unit> { continuation ->
+        documentRef.set(todo, SetOptions.merge())
+            .addOnSuccessListener {
+                continuation.resume(Unit)
+            }
+            .addOnFailureListener {
+                continuation.resumeWithException(it)
+            }
     }
 }
