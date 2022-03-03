@@ -1,6 +1,7 @@
 package que.sera.sera.android2022.repository.todo
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -21,6 +22,7 @@ class ToDoRepositoryFirebaseImpl @Inject constructor(
         showComplete: Boolean
     ): Flow<List<ToDo>> = callbackFlow {
         val callback = fireStore.collection("todo")
+            .orderBy("updated", Query.Direction.DESCENDING)
             .addSnapshotListener { value, error ->
                 value?.documents?.mapNotNull {
                     it.toObject(ToDo::class.java)
@@ -49,9 +51,32 @@ class ToDoRepositoryFirebaseImpl @Inject constructor(
             }
     }
 
-    override suspend fun registerToDo(todo: ToDo) = suspendCoroutine<Unit> { continuation ->
+    override suspend fun registerToDo(todo: ToDo) {
+        val currentMaxValue = currentMaxValue()
+        registerInner(todo = todo, currentMaxValue = currentMaxValue)
+    }
+
+    private suspend fun currentMaxValue() = suspendCoroutine<Int> { continuation ->
         fireStore.collection("todo")
-            .add(todo)
+            .orderBy("id", Query.Direction.DESCENDING)
+            .limit(1)
+            .get()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val currentValue = it.result.toObjects(ToDo::class.java).firstOrNull()?.id ?: 1
+                    continuation.resume(currentValue)
+                } else {
+                    continuation.resumeWithException(it.exception!!)
+                }
+            }
+    }
+
+    private suspend fun registerInner(
+        todo: ToDo,
+        currentMaxValue: Int
+    ) = suspendCoroutine<Unit> { continuation ->
+        fireStore.collection("todo")
+            .add(todo.copy(id = currentMaxValue + 1))
             .addOnSuccessListener {
                 continuation.resume(Unit)
             }
