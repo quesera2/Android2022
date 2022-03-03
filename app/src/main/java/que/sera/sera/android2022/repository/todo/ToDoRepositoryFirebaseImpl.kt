@@ -22,19 +22,24 @@ class ToDoRepositoryFirebaseImpl @Inject constructor(
     override fun getToDos(
         showComplete: Boolean
     ): Flow<List<ToDo>> = callbackFlow {
-        val callback = fireStore.collection("todo")
-            .orderBy("status", Query.Direction.DESCENDING)
-            .orderBy("updated", Query.Direction.DESCENDING)
-            .addSnapshotListener { value, error ->
-                value?.documents?.mapNotNull {
-                    it.toObject(ToDo::class.java)
-                }?.let {
-                    trySend(it)
-                }
-                error?.let {
-                    close(error)
-                }
+        val collection = fireStore.collection("todo")
+        val query = if (showComplete) {
+            collection.whereEqualTo("status", "Incomplete")
+                .orderBy("updated", Query.Direction.DESCENDING)
+        } else {
+            collection.orderBy("status", Query.Direction.DESCENDING)
+                .orderBy("updated", Query.Direction.DESCENDING)
+        }
+        val callback = query.addSnapshotListener { value, error ->
+            value?.documents?.mapNotNull {
+                it.toObject(ToDo::class.java)
+            }?.let {
+                trySend(it)
             }
+            error?.let {
+                close(error)
+            }
+        }
         awaitClose {
             callback.remove()
         }
