@@ -9,6 +9,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.tasks.await
 import que.sera.sera.android2022.model.todo.ToDo
 import javax.inject.Inject
 import kotlin.coroutines.resume
@@ -55,70 +56,30 @@ class ToDoRepositoryFirebaseImpl @Inject constructor(
     }
 
     override suspend fun registerToDo(todo: ToDo) {
-        val currentMaxValue = currentMaxValue()
-        registerInner(todo = todo, currentMaxValue = currentMaxValue)
-    }
-
-    private suspend fun currentMaxValue() = suspendCoroutine<Int> { continuation ->
-        fireStore.collection("todo")
+        val currentMaxValue = fireStore.collection("todo")
             .orderBy("id", Query.Direction.DESCENDING)
             .limit(1)
             .get()
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    val currentValue = it.result.toObjects(ToDo::class.java).firstOrNull()?.id ?: 1
-                    continuation.resume(currentValue)
-                } else {
-                    continuation.resumeWithException(it.exception!!)
-                }
-            }
-    }
+            .await()
+            .toObjects(ToDo::class.java)
+            .firstOrNull()
+            ?.id
+            ?: 0
 
-    private suspend fun registerInner(
-        todo: ToDo,
-        currentMaxValue: Int
-    ) = suspendCoroutine<Unit> { continuation ->
         fireStore.collection("todo")
             .add(todo.copy(id = currentMaxValue + 1))
-            .addOnSuccessListener {
-                continuation.resume(Unit)
-            }
-            .addOnFailureListener {
-                continuation.resumeWithException(it)
-            }
+            .await()
     }
 
     override suspend fun updateToDo(todo: ToDo) {
-        val documentRef = getDocumentRef(todo.id)
-        updateInner(documentRef = documentRef, todo = todo)
-    }
-
-    private suspend fun getDocumentRef(
-        id: Int
-    ) = suspendCoroutine<DocumentReference> { continuation ->
         fireStore.collection("todo")
-            .whereEqualTo("id", id)
+            .whereEqualTo("id", todo.id)
             .get()
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    val documentRef = it.result.documents.first().reference
-                    continuation.resume(documentRef)
-                } else {
-                    continuation.resumeWithException(it.exception!!)
-                }
-            }
-    }
-
-    private suspend fun updateInner(
-        documentRef: DocumentReference,
-        todo: ToDo
-    ) = suspendCoroutine<Unit> { continuation ->
-        documentRef.set(todo, SetOptions.merge())
-            .addOnSuccessListener {
-                continuation.resume(Unit)
-            }
-            .addOnFailureListener {
-                continuation.resumeWithException(it)
-            }
+            .await()
+            .documents
+            .first()
+            .reference
+            .set(todo, SetOptions.merge())
+            .await()
     }
 }
