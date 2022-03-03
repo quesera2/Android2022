@@ -1,6 +1,5 @@
 package que.sera.sera.android2022.repository.todo
 
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
@@ -13,7 +12,6 @@ import kotlinx.coroutines.tasks.await
 import que.sera.sera.android2022.model.todo.ToDo
 import javax.inject.Inject
 import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class ToDoRepositoryFirebaseImpl @Inject constructor(
