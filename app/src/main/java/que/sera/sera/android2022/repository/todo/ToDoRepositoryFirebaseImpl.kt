@@ -21,11 +21,15 @@ class ToDoRepositoryFirebaseImpl @Inject constructor(
         showComplete: Boolean
     ): Flow<List<ToDo>> = callbackFlow {
         val callback = fireStore.collection("todo")
-            .addSnapshotListener { value, _ ->
-                val result = value?.documents?.mapNotNull {
+            .addSnapshotListener { value, error ->
+                value?.documents?.mapNotNull {
                     it.toObject(ToDo::class.java)
-                } ?: emptyList()
-                trySend(result)
+                }?.let {
+                    trySend(it)
+                }
+                error?.let {
+                    close(error)
+                }
             }
         awaitClose {
             callback.remove()
