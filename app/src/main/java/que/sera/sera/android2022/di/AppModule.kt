@@ -16,7 +16,6 @@ import que.sera.sera.android2022.repository.pref.PreferencesRepository
 import que.sera.sera.android2022.repository.pref.PreferencesRepositoryImpl
 import que.sera.sera.android2022.repository.todo.ToDoRepository
 import que.sera.sera.android2022.repository.todo.ToDoRepositoryFirebaseImpl
-import que.sera.sera.android2022.repository.todo.ToDoRepositoryImpl
 import que.sera.sera.android2022.room.AppDatabase
 import que.sera.sera.android2022.room.ToDoDao
 import javax.inject.Singleton
@@ -40,13 +39,6 @@ object AppModule {
     @Singleton
     @Provides
     fun provideFireStore() = FirebaseFirestore.getInstance()
-
-//    @Singleton
-//    @Provides
-//    fun provideToDoRepository(
-//        dao: ToDoDao
-//    ): ToDoRepository = ToDoRepositoryImpl(dao)
-
 
     @Singleton
     @Provides
