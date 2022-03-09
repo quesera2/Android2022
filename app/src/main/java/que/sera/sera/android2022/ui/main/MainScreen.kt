@@ -53,10 +53,10 @@ fun MainScreen(
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            val showTaskCompleted = viewModel.showCompletedTask.collectAsState(initial = false)
+            val showTaskCompleted by viewModel.showCompletedTask.collectAsState(initial = false)
             AppBar(
                 scrollBehavior = scrollBehavior,
-                showCompletedTask = showTaskCompleted.value,
+                showCompletedTask = showTaskCompleted,
                 onClick = { viewModel.updateShowCompleteTask(it) })
         },
         floatingActionButton = {
@@ -69,17 +69,28 @@ fun MainScreen(
             }
         },
         content = {
-            val listItemsState = viewModel.getToDos().collectAsState(emptyList())
-            ToDoListView(
-                listItems = listItemsState.value,
-                modifier = modifier,
-                onClick = {
-                    navController.navigate("detail/${it.id}")
-                },
-                onSwipe = {
-                    viewModel.doneToDo(it)
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                val listItemsState by viewModel.getToDos().collectAsState(emptyList())
+                ToDoListView(
+                    listItems = listItemsState,
+                    modifier = modifier,
+                    onClick = {
+                        navController.navigate("detail/${it.id}")
+                    },
+                    onSwipe = {
+                        viewModel.doneToDo(it)
+                    }
+                )
+
+                val showProgress by viewModel.showProgress.collectAsState(initial = true)
+                if (showProgress) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
+                    )
                 }
-            )
+            }
         }
     )
 }
