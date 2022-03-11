@@ -27,6 +27,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -103,15 +105,27 @@ fun AppBar(
     onClick: (Boolean) -> Unit
 ) {
     SmallTopAppBar(
-        modifier = modifier,
+        modifier = modifier.semantics {
+            val label = if (showCompletedTask) {
+                "完了したタスクを表示しない"
+            } else {
+                "完了したタスクを表示する"
+            }
+            this.onClick(label = label, action = null)
+        },
         title = { Text(text = "タスク一覧") },
         actions = {
             IconButton(onClick = { onClick(!showCompletedTask) }) {
+                val tintColor = if (showCompletedTask) {
+                    MaterialTheme.colorScheme.primary.copy(0.4f)
+                } else {
+                    MaterialTheme.colorScheme.primary
+                }
+
                 Icon(
                     painter = painterResource(id = R.drawable.ic_baseline_filter_list_24),
-                    contentDescription = "タスク完了表示を切り替える",
-                    tint = if (showCompletedTask) MaterialTheme.colorScheme.primary.copy(0.4f)
-                    else MaterialTheme.colorScheme.primary
+                    contentDescription = null,
+                    tint = tintColor
                 )
             }
         },
