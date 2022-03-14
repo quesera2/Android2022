@@ -157,6 +157,8 @@ fun ToDoListView(
                     false
                 }
             )
+            // TODO: タスクを完了したアイテムの表示が戻らないため再表示のタイミングで初期状態に戻している。
+            //  ただしスワイプ可能状態はそのままなため、ワークアラウンドとしては不完全。
             if (dismissState.currentValue != DismissValue.Default) {
                 LaunchedEffect(Unit) {
                     dismissState.snapTo(DismissValue.Default)
