@@ -85,6 +85,8 @@ fun ReminderRegister(
     Column(
         modifier = modifier
             .fillMaxWidth()
+            .navigationBarsPadding()
+            .imePadding()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
