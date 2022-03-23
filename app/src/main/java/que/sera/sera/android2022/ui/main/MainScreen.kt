@@ -53,13 +53,19 @@ fun MainScreen(
     val scrollBehavior = remember { TopAppBarDefaults.enterAlwaysScrollBehavior() }
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = Modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
+            .systemBarsPadding(),
         topBar = {
             val showTaskCompleted by viewModel.showCompletedTask.collectAsState(initial = false)
             AppBar(
                 scrollBehavior = scrollBehavior,
                 showCompletedTask = showTaskCompleted,
-                onClick = { viewModel.updateShowCompleteTask(it) })
+                onClick = { viewModel.updateShowCompleteTask(it) },
+                modifier = Modifier.windowInsetsPadding(
+                    WindowInsets.systemBars.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top)
+                )
+            )
         },
         floatingActionButton = {
             FloatingActionButton(
