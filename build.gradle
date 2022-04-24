@@ -2,7 +2,7 @@
 buildscript {
     ext {
         room_version = "2.4.2"
-        compose_version = '1.2.0-alpha05'
+        compose_version = '1.2.0-alpha08'
     }
     repositories {
         google()
