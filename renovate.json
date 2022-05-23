@@ -10,5 +10,5 @@
       "groupName": "com.google.dagger:hilt",
     }
   ],
-  "lagels": "renovate", 
+  "labels": "renovate", 
 }
