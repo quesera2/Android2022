@@ -7,7 +7,7 @@
       "matchPackagePrefixes": [
         "com.google.dagger:hilt"
       ],
-      "groupName": "hilt",
+      "groupName": "com.google.dagger:hilt",
     }
   ],
 }
