@@ -3,7 +3,7 @@ package que.sera.sera.android2022.data.room
 import androidx.room.TypeConverter
 import java.util.*
 
-class Converter {
+internal class Converter {
 
     @TypeConverter
     fun fromTimestamp(value: Long?): Date? {
@@ -14,5 +14,4 @@ class Converter {
     fun dateToTimestamp(date: Date?): Long? {
         return date?.time
     }
-    
 }

@@ -13,7 +13,7 @@ import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class ToDoRepositoryFirebaseImpl @Inject constructor(
+internal class ToDoRepositoryFirebaseImpl @Inject constructor(
     private val fireStore: FirebaseFirestore
 ) : ToDoRepository {
 

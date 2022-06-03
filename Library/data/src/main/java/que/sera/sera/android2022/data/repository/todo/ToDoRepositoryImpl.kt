@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import que.sera.sera.android2022.data.entity.todo.ToDo
 import que.sera.sera.android2022.data.room.ToDoDao
 
-class ToDoRepositoryImpl(
+internal class ToDoRepositoryImpl(
     private val dao: ToDoDao
 ) : ToDoRepository {
 
