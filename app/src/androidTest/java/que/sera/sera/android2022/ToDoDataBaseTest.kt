@@ -12,16 +12,16 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import que.sera.sera.android2022.model.todo.ToDo
-import que.sera.sera.android2022.room.AppDatabase
-import que.sera.sera.android2022.room.ToDoDao
+import data.entity.todo.todo.ToDo
+import que.sera.sera.android2022.data.room.AppDatabase
+import data.room.ToDoDao
 import java.io.IOException
 
 
 @RunWith(AndroidJUnit4::class)
 class ToDoDataBaseTest {
     private lateinit var db: AppDatabase
-    private lateinit var todoDao: ToDoDao
+    private lateinit var todoDao: data.room.ToDoDao
 
     @Before
     fun createDb() {
@@ -39,7 +39,7 @@ class ToDoDataBaseTest {
     @Test
     @Throws(Exception::class)
     fun writeUserAndReadInList() = runBlocking {
-        val todo = ToDo(name = "テスト")
+        val todo = data.entity.todo.todo.ToDo(name = "テスト")
         todoDao.insert(todo)
         val expect = todoDao.getAll().first().first()
         assertThat(expect.id, equalTo(1))

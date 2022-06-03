@@ -1,4 +1,4 @@
-package que.sera.sera.android2022.model.todo
+package que.sera.sera.android2022.data.entity.todo
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

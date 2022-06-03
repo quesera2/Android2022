@@ -1,8 +1,8 @@
-package que.sera.sera.android2022.repository.todo
+package que.sera.sera.android2022.data.repository.todo
 
 import kotlinx.coroutines.flow.Flow
-import que.sera.sera.android2022.model.todo.ToDo
-import que.sera.sera.android2022.room.ToDoDao
+import que.sera.sera.android2022.data.entity.todo.ToDo
+import que.sera.sera.android2022.data.room.ToDoDao
 
 class ToDoRepositoryImpl(
     private val dao: ToDoDao

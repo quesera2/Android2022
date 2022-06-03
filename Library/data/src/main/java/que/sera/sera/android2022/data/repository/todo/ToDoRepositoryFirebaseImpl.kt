@@ -1,15 +1,14 @@
-package que.sera.sera.android2022.repository.todo
+package que.sera.sera.android2022.data.repository.todo
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.tasks.await
-import que.sera.sera.android2022.model.todo.ToDo
+import que.sera.sera.android2022.data.entity.todo.ToDo
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -18,7 +17,6 @@ class ToDoRepositoryFirebaseImpl @Inject constructor(
     private val fireStore: FirebaseFirestore
 ) : ToDoRepository {
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     override fun getToDos(
         showComplete: Boolean
     ): Flow<List<ToDo>> = callbackFlow {

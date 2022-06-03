@@ -1,4 +1,4 @@
-package que.sera.sera.android2022.repository.pref
+package que.sera.sera.android2022.data.repository.pref
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
