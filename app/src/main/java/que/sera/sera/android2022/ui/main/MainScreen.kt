@@ -50,7 +50,12 @@ fun MainScreen(
     viewModel: MainViewModel,
     navController: NavController,
 ) {
-    val scrollBehavior = remember { TopAppBarDefaults.enterAlwaysScrollBehavior() }
+    val topAppBarScrollState = rememberTopAppBarScrollState()
+    val scrollBehavior = remember {
+        TopAppBarDefaults.enterAlwaysScrollBehavior(
+            state = topAppBarScrollState
+        )
+    }
 
     Scaffold(
         modifier = Modifier
