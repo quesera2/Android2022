@@ -1,4 +1,4 @@
-package que.sera.sera.android2022.repository.pref
+package que.sera.sera.android2022.data.repository.pref
 
 import kotlinx.coroutines.flow.Flow
 

@@ -37,8 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.android.material.composethemeadapter3.Mdc3Theme
 import que.sera.sera.android2022.R
-import que.sera.sera.android2022.model.todo.ToDo
-import que.sera.sera.android2022.model.todo.ToDoStatus
+import que.sera.sera.android2022.data.entity.todo.ToDo
+import que.sera.sera.android2022.data.entity.todo.ToDoStatus
 import java.text.SimpleDateFormat
 
 
@@ -50,7 +50,12 @@ fun MainScreen(
     viewModel: MainViewModel,
     navController: NavController,
 ) {
-    val scrollBehavior = remember { TopAppBarDefaults.enterAlwaysScrollBehavior() }
+    val topAppBarScrollState = rememberTopAppBarScrollState()
+    val scrollBehavior = remember {
+        TopAppBarDefaults.enterAlwaysScrollBehavior(
+            state = topAppBarScrollState
+        )
+    }
 
     Scaffold(
         modifier = Modifier
@@ -76,7 +81,7 @@ fun MainScreen(
                 Icon(Icons.Filled.Add, contentDescription = "追加")
             }
         },
-        content = {
+        content = { paddingValues ->
             Box(
                 modifier = Modifier.fillMaxSize()
             ) {
@@ -144,8 +149,8 @@ fun AppBar(
 @Composable
 @SuppressLint("ModifierParameter")
 fun ToDoListView(
-    modifier: Modifier = Modifier,
     listItems: List<ToDo>,
+    modifier: Modifier = Modifier,
     onClick: (ToDo) -> Unit = { },
     onSwipe: (ToDo) -> Unit = { },
 ) {
@@ -295,8 +300,16 @@ fun PreviewToDoList() {
     Mdc3Theme {
         ToDoListView(
             listItems = listOf(
-                ToDo(0, "完了", ToDoStatus.Completed),
-                ToDo(0, "未完了", ToDoStatus.Incomplete),
+                ToDo(
+                    0,
+                    "完了",
+                    ToDoStatus.Completed
+                ),
+                ToDo(
+                    0,
+                    "未完了",
+                    ToDoStatus.Incomplete
+                ),
             )
         )
     }

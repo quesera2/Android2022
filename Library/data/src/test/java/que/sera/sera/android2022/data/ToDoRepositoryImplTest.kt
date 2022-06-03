@@ -1,4 +1,4 @@
-package que.sera.sera.android2022
+package que.sera.sera.android2022.data
 
 import io.mockk.*
 import kotlinx.coroutines.flow.emptyFlow
@@ -8,10 +8,10 @@ import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
-import que.sera.sera.android2022.model.todo.ToDo
-import que.sera.sera.android2022.repository.todo.ToDoRepository
-import que.sera.sera.android2022.repository.todo.ToDoRepositoryImpl
-import que.sera.sera.android2022.room.ToDoDao
+import que.sera.sera.android2022.data.entity.todo.ToDo
+import que.sera.sera.android2022.data.repository.todo.ToDoRepository
+import que.sera.sera.android2022.data.repository.todo.ToDoRepositoryImpl
+import que.sera.sera.android2022.data.room.ToDoDao
 
 class ToDoRepositoryImplTest {
 
@@ -27,7 +27,7 @@ class ToDoRepositoryImplTest {
     @Test
     fun testGetAll() {
         every { dao.getAll() } returns emptyFlow()
-        repository.getToDos()
+        repository.getToDos(showComplete = true)
         verify(exactly = 1) { dao.getAll() }
         confirmVerified(dao)
     }
@@ -50,7 +50,10 @@ class ToDoRepositoryImplTest {
 
     @Test
     fun testGetTodo() = runBlocking {
-        coEvery { dao.findById(12) } returns ToDo(12, "テスト")
+        coEvery { dao.findById(12) } returns ToDo(
+            id = 12,
+            name = "テスト"
+        )
         val actual = repository.getToDo(12)
         coVerify(exactly = 1) { dao.findById(12) }
         confirmVerified(dao)
