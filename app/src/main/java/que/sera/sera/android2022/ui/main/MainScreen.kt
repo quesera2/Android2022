@@ -1,6 +1,5 @@
 package que.sera.sera.android2022.ui.main
 
-import android.annotation.SuppressLint
 import android.text.format.DateFormat
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -44,11 +43,10 @@ import java.text.SimpleDateFormat
 
 @ExperimentalMaterial3Api
 @Composable
-@SuppressLint("ModifierParameter")
 fun MainScreen(
-    modifier: Modifier = Modifier,
     viewModel: MainViewModel,
     navController: NavController,
+    modifier: Modifier = Modifier,
 ) {
     val topAppBarScrollState = rememberTopAppBarScrollState()
     val scrollBehavior = remember {
@@ -88,7 +86,7 @@ fun MainScreen(
                 val listItemsState by viewModel.getToDos().collectAsState(emptyList())
                 ToDoListView(
                     listItems = listItemsState,
-                    modifier = modifier,
+                    modifier = modifier.padding(paddingValues = paddingValues),
                     onClick = {
                         navController.navigate("detail/${it.id}")
                     },
@@ -147,7 +145,6 @@ fun AppBar(
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
-@SuppressLint("ModifierParameter")
 fun ToDoListView(
     listItems: List<ToDo>,
     modifier: Modifier = Modifier,
@@ -157,7 +154,9 @@ fun ToDoListView(
     val locale = LocalContext.current.resources.configuration.locales[0]
     val formatter = SimpleDateFormat(DateFormat.getBestDateTimePattern(locale, "yyyyMMMdd"), locale)
 
-    LazyColumn {
+    LazyColumn(
+        modifier = modifier
+    ) {
         items(listItems, key = { it.id }) { item ->
             val dismissState = rememberDismissState(
                 confirmStateChange = {
@@ -224,12 +223,11 @@ fun ToDoListView(
 }
 
 @Composable
-@SuppressLint("ModifierParameter")
 fun InCompleteToDoListItem(
-    modifier: Modifier = Modifier,
     toDo: ToDo,
     formatter: SimpleDateFormat,
-    onClick: (ToDo) -> Unit
+    onClick: (ToDo) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Surface {
         Column(
@@ -253,11 +251,10 @@ fun InCompleteToDoListItem(
 }
 
 @Composable
-@SuppressLint("ModifierParameter")
 fun CompletedToDoListItem(
-    modifier: Modifier = Modifier,
     formatter: SimpleDateFormat,
-    toDo: ToDo
+    toDo: ToDo,
+    modifier: Modifier = Modifier,
 ) {
     Surface {
         Row(
@@ -294,7 +291,7 @@ fun CompletedToDoListItem(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun PreviewToDoList() {
     Mdc3Theme {
@@ -306,7 +303,7 @@ fun PreviewToDoList() {
                     ToDoStatus.Completed
                 ),
                 ToDo(
-                    0,
+                    1,
                     "未完了",
                     ToDoStatus.Incomplete
                 ),
