@@ -1,11 +1,11 @@
-package que.sera.sera.android2022.data.room
+package que.sera.sera.android2022.entity.room
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
-import que.sera.sera.android2022.data.entity.todo.ToDo
+import que.sera.sera.android2022.entity.ToDo
 
 @Dao
 interface ToDoDao {

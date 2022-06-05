@@ -6,8 +6,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import que.sera.sera.android2022.data.entity.todo.ToDo
-import que.sera.sera.android2022.data.entity.todo.ToDoStatus
+import que.sera.sera.android2022.entity.ToDo
+import que.sera.sera.android2022.entity.ToDoStatus
 
 import que.sera.sera.android2022.data.repository.pref.PreferencesRepository
 import que.sera.sera.android2022.data.repository.todo.ToDoRepository

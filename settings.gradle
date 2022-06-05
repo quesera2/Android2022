@@ -9,3 +9,4 @@ dependencyResolutionManagement {
 rootProject.name = "Android2022"
 include ':app'
 include ':library:data'
+include ':library:entity'

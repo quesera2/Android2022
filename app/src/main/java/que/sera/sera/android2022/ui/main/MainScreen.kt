@@ -36,8 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.android.material.composethemeadapter3.Mdc3Theme
 import que.sera.sera.android2022.R
-import que.sera.sera.android2022.data.entity.todo.ToDo
-import que.sera.sera.android2022.data.entity.todo.ToDoStatus
+import que.sera.sera.android2022.entity.ToDo
+import que.sera.sera.android2022.entity.ToDoStatus
 import java.text.SimpleDateFormat
 
 

@@ -13,7 +13,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import data.entity.todo.todo.ToDo
-import que.sera.sera.android2022.data.room.AppDatabase
+import que.sera.sera.android2022.entity.room.AppDatabase
 import data.room.ToDoDao
 import java.io.IOException
 

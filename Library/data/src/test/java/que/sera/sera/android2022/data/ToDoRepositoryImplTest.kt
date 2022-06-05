@@ -8,10 +8,10 @@ import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
-import que.sera.sera.android2022.data.entity.todo.ToDo
+import que.sera.sera.android2022.entity.ToDo
 import que.sera.sera.android2022.data.repository.todo.ToDoRepository
 import que.sera.sera.android2022.data.repository.todo.ToDoRepositoryImpl
-import que.sera.sera.android2022.data.room.ToDoDao
+import que.sera.sera.android2022.entity.room.ToDoDao
 
 class ToDoRepositoryImplTest {
 

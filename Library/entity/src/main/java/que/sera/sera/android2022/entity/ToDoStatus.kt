@@ -1,4 +1,4 @@
-package que.sera.sera.android2022.data.entity.todo
+package que.sera.sera.android2022.entity
 
 enum class ToDoStatus {
     Incomplete, Completed

@@ -1,7 +1,7 @@
 package que.sera.sera.android2022.data.repository.todo
 
 import kotlinx.coroutines.flow.Flow
-import que.sera.sera.android2022.data.entity.todo.ToDo
+import que.sera.sera.android2022.entity.ToDo
 
 interface ToDoRepository {
 

@@ -1,4 +1,4 @@
-package que.sera.sera.android2022.data.room
+package que.sera.sera.android2022.entity.room
 
 import androidx.room.TypeConverter
 import java.util.*
