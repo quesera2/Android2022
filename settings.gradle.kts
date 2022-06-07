@@ -1,3 +1,9 @@
+include(
+    ":app",
+    ":library:data",
+    ":library:entity"
+)
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -7,6 +13,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Android2022"
-include ':app'
-include ':library:data'
-include ':library:entity'
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
