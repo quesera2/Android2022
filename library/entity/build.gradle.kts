@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "que.sera.sera.library.entity"
+    namespace = "que.sera.sera.android2022.entity"
     compileSdk = 32
 
     defaultConfig {
@@ -37,10 +37,10 @@ android {
 
 dependencies {
 
-    implementation("com.google.dagger:hilt-android:2.42")
-    kapt("com.google.dagger:hilt-android-compiler:2.42")
+    implementation(libs.com.google.dagger.hilt.android)
+    kapt(libs.com.google.dagger.hilt.android.compiler)
 
-    implementation("androidx.room:room-runtime:2.4.2")
-    implementation("androidx.room:room-ktx:2.4.2")
-    testImplementation("androidx.room:room-testing:2.4.2")
+    implementation(libs.androidx.room.room.runtime)
+    implementation(libs.androidx.room.room.ktx)
+    testImplementation(libs.androidx.room.room.testing)
 }

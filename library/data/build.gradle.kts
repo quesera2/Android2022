@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "que.sera.sera.android2022.library.data"
+    namespace = "que.sera.sera.android2022.data"
     compileSdk = 32
 
     defaultConfig {
@@ -37,26 +37,27 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.8.0")
-    implementation("androidx.appcompat:appcompat:1.4.2")
-    implementation("com.google.android.material:material:1.6.1")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    implementation(libs.androidx.core.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.com.google.android.material)
 
-    implementation("com.google.dagger:hilt-android:2.42")
-    kapt("com.google.dagger:hilt-android-compiler:2.42")
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.espresso.core)
 
-    kapt("androidx.hilt:hilt-compiler:1.0.0")
+    implementation(libs.com.google.dagger.hilt.android)
+    kapt(libs.com.google.dagger.hilt.android.compiler)
 
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    kapt(libs.androidx.hilt.hilt.compiler)
 
-    implementation(platform("com.google.firebase:firebase-bom:30.1.0"))
-    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-firestore-ktx")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.2")
+    implementation(libs.androidx.datastore.datastore.preferences)
 
-    testImplementation("io.mockk:mockk:1.12.4")
+    implementation(platform(libs.com.google.firebase.firebase.bom))
+    implementation(libs.com.google.firebase.firebase.analytics)
+    implementation(libs.com.google.firebase.firebase.firestore.ktx)
+    implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.play.services)
 
-    implementation(project(":library:entity"))
+    testImplementation(libs.junit)
+    testImplementation(libs.io.mockk)
+
+    implementation(projects.library.entity)
 }
