@@ -34,7 +34,7 @@ com-android-tools-build-gradle = "com.android.tools.build:gradle:7.2.1"
 com-google-accompanist-accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "com-google-accompanist" }
 com-google-accompanist-accompanist-navigation-material = { module = "com.google.accompanist:accompanist-navigation-material", version.ref = "com-google-accompanist" }
 com-google-android-material = "com.google.android.material:material:1.6.1"
-com-google-android-material-compose-theme-adapter-3 = "com.google.android.material:compose-theme-adapter-3:1.0.10"
+com-google-android-material-compose-theme-adapter-3 = "com.google.android.material:compose-theme-adapter-3:1.0.11"
 com-google-dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "com-google-dagger" }
 com-google-dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "com-google-dagger" }
 com-google-dagger-hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "com-google-dagger" }
@@ -44,7 +44,7 @@ com-google-firebase-firebase-firestore-ktx = "com.google.firebase:firebase-fires
 com-google-gms-google-services = "com.google.gms:google-services:4.3.10"
 io-mockk = "io.mockk:mockk:1.12.4"
 junit = "junit:junit:4.13.2"
-org-jacoco-org-jacoco-ant = "org.jacoco:org.jacoco.ant:0.8.7"
+org-jacoco-org-jacoco-ant = "org.jacoco:org.jacoco.ant:0.8.8"
 org-jetbrains-kotlin-kotlin-annotation-processing-gradle = { module = "org.jetbrains.kotlin:kotlin-annotation-processing-gradle", version.ref = "org-jetbrains-kotlin" }
 org-jetbrains-kotlin-kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "org-jetbrains-kotlin" }
 org-jetbrains-kotlin-kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "org-jetbrains-kotlin" }
@@ -72,7 +72,7 @@ com-android-library = "com.android.library:7.2.1"
 com-android-lint = "com.android.lint:7.2.1"
 com-android-reporting = "com.android.reporting:7.2.1"
 com-android-test = "com.android.test:7.2.1"
-com-github-ben-manes-versions = "com.github.ben-manes.versions:0.41.0"
+com-github-ben-manes-versions = "com.github.ben-manes.versions:0.42.0"
 com-google-dagger-hilt-android = "com.google.dagger.hilt.android:2.42"
 com-google-gms-google-services = "com.google.gms.google-services:4.3.10"
 dagger-hilt-android-plugin = "dagger.hilt.android.plugin:2.42"
