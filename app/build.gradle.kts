@@ -86,6 +86,6 @@ dependencies {
 
     testImplementation(libs.io.mockk)
 
-    implementation(projects.library.data)
-    implementation(projects.library.entity)
+    implementation(projects.data)
+    implementation(projects.entity)
 }
