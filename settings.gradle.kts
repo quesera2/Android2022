@@ -1,7 +1,7 @@
 include(
     ":app",
-    ":data",
-    ":entity"
+    ":library:data",
+    ":library:entity"
 )
 
 dependencyResolutionManagement {
@@ -15,4 +15,3 @@ dependencyResolutionManagement {
 rootProject.name = "Android2022"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-include(":test")
