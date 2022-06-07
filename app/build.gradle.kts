@@ -82,7 +82,7 @@ dependencies {
     implementation("com.google.accompanist:accompanist-navigation-animation:0.24.5-alpha")
     implementation("com.google.accompanist:accompanist-navigation-material:0.24.5-alpha")
 
-    implementation("com.google.android.material:compose-theme-adapter-3:1.0.10")
+    implementation("com.google.android.material:compose-theme-adapter-3:1.0.11")
 
     testImplementation("io.mockk:mockk:1.12.4")
 
