@@ -11,5 +11,5 @@
     }
   ],
   "labels": ["renovate"], 
-  "reviewes": ["@quesera2"],
+  "reviewers": ["@quesera2"],
 }
