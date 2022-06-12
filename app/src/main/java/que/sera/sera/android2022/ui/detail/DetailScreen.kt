@@ -1,5 +1,6 @@
 package que.sera.sera.android2022.ui.detail
 
+import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -7,6 +8,7 @@ import androidx.compose.material.OutlinedButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -35,31 +37,34 @@ fun DetailScreen(
         onDispose { job.cancel() }
     }
 
-    val uiState = viewModel.uiState.collectAsState()
-    val cancel: () -> Unit = { navController.popBackStack() }
+    Surface {
 
-    when (val currentState = uiState.value) {
-        is DetailViewModelState.Loading -> ReminderRegister(
-            inputEnabled = false,
-            onCancel = cancel
-        )
-        is DetailViewModelState.InputInitial -> ReminderRegister(
-            buttonLabel = "登録する",
-            onRegister = { toDoText ->
-                viewModel.registerToDo(toDoText)
-                navController.popBackStack()
-            },
-            onCancel = cancel
-        )
-        is DetailViewModelState.InputEdit -> ReminderRegister(
-            initialToDoText = currentState.toDo.name,
-            buttonLabel = "更新する",
-            onRegister = { toDoText ->
-                viewModel.updateToDo(toDoText)
-                navController.popBackStack()
-            },
-            onCancel = cancel
-        )
+        val uiState = viewModel.uiState.collectAsState()
+        val cancel: () -> Unit = { navController.popBackStack() }
+
+        when (val currentState = uiState.value) {
+            is DetailViewModelState.Loading -> ReminderRegister(
+                inputEnabled = false,
+                onCancel = cancel
+            )
+            is DetailViewModelState.InputInitial -> ReminderRegister(
+                buttonLabel = "登録する",
+                onRegister = { toDoText ->
+                    viewModel.registerToDo(toDoText)
+                    navController.popBackStack()
+                },
+                onCancel = cancel
+            )
+            is DetailViewModelState.InputEdit -> ReminderRegister(
+                initialToDoText = currentState.toDo.name,
+                buttonLabel = "更新する",
+                onRegister = { toDoText ->
+                    viewModel.updateToDo(toDoText)
+                    navController.popBackStack()
+                },
+                onCancel = cancel
+            )
+        }
     }
 }
 
@@ -150,7 +155,7 @@ fun ReminderRegister(
     }
 }
 
-@Preview
+@Preview(uiMode = UI_MODE_NIGHT_MASK)
 @Composable
 fun PreviewReminderRegister() {
     Mdc3Theme {
