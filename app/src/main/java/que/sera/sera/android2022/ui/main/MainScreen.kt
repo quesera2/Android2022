@@ -40,7 +40,6 @@ import que.sera.sera.android2022.entity.ToDo
 import que.sera.sera.android2022.entity.ToDoStatus
 import java.text.SimpleDateFormat
 
-
 @ExperimentalMaterial3Api
 @Composable
 fun MainScreen(

@@ -3,6 +3,8 @@ package que.sera.sera.android2022.ui.app
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -14,6 +16,7 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.bottomSheet
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.material.composethemeadapter3.Mdc3Theme
 import que.sera.sera.android2022.ui.detail.DetailScreen
 import que.sera.sera.android2022.ui.main.MainScreen
@@ -24,6 +27,14 @@ import que.sera.sera.android2022.ui.main.MainScreen
 @Composable
 fun MyApp() {
     Mdc3Theme {
+        val systemUiController = rememberSystemUiController()
+        SideEffect {
+            systemUiController.setSystemBarsColor(
+                color = Color.Transparent,
+                darkIcons = false
+            )
+        }
+
         val navController = rememberAnimatedNavController()
         val bottomSheetNavigator = rememberBottomSheetNavigator()
         navController.navigatorProvider += bottomSheetNavigator
