@@ -64,9 +64,7 @@ dependencies {
     implementation(libs.androidx.activity.activity.compose)
     implementation(libs.androidx.compose.material3)
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.androidx.test.espresso.espresso.core)
-    androidTestImplementation(libs.androidx.compose.ui.ui.test.junit4)
+
     debugImplementation(libs.androidx.compose.ui.ui.tooling)
     implementation(libs.androidx.window)
 
