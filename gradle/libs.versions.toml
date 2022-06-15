@@ -11,7 +11,7 @@ org-jetbrains-kotlin = "1.6.21"
 androidx-activity-activity-compose = "androidx.activity:activity-compose:1.4.0"
 androidx-appcompat = "androidx.appcompat:appcompat:1.4.2"
 androidx-compose-compiler = "androidx.compose.compiler:compiler:1.2.0-beta03"
-androidx-compose-material = "androidx.compose.material:material:1.2.0-beta03"
+androidx-compose-material = "androidx.compose.material:material:1.2.0-rc01"
 androidx-compose-material3 = "androidx.compose.material3:material3:1.0.0-alpha13"
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "androidx-compose-ui" }
 androidx-compose-ui-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx-compose-ui" }
