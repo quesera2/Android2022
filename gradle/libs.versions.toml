@@ -35,7 +35,7 @@ com-android-tools-build-gradle = "com.android.tools.build:gradle:7.2.1"
 com-google-accompanist-accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "com-google-accompanist" }
 com-google-accompanist-accompanist-navigation-material = { module = "com.google.accompanist:accompanist-navigation-material", version.ref = "com-google-accompanist" }
 com-google-android-material = "com.google.android.material:material:1.6.1"
-com-google-android-material-compose-theme-adapter-3 = "com.google.android.material:compose-theme-adapter-3:1.0.11"
+com-google-android-material-compose-theme-adapter-3 = "com.google.android.material:compose-theme-adapter-3:1.0.16"
 com-google-dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "com-google-dagger" }
 com-google-dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "com-google-dagger" }
 com-google-dagger-hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "com-google-dagger" }
