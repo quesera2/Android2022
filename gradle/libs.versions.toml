@@ -56,16 +56,12 @@ com-google-accompanist-accompanist-systemuicontroller = "com.google.accompanist:
 [plugins]
 com-android-application = "com.android.application:7.3.1"
 com-android-library = "com.android.library:7.3.1"
-com-github-ben-manes-versions = "com.github.ben-manes.versions:0.42.0"
-com-google-dagger-hilt-android = "com.google.dagger.hilt.android:2.42"
+com-google-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "com-google-dagger" }
 com-google-gms-google-services = "com.google.gms.google-services:4.3.14"
-dagger-hilt-android-plugin = "dagger.hilt.android.plugin:2.42"
-kotlin = "kotlin:1.6.21"
-kotlin-android = "kotlin-android:1.6.21"
-kotlin-android-extensions = "kotlin-android-extensions:1.6.21"
-kotlin-kapt = "kotlin-kapt:1.6.21"
-kotlin-parcelize = "kotlin-parcelize:1.6.21"
-kotlin-platform-android = "kotlin-platform-android:1.6.21"
-kotlin-scripting = "kotlin-scripting:1.6.21"
-org-jetbrains-kotlin-android = "org.jetbrains.kotlin.android:1.7.22"
-org-jetbrains-kotlin-android-extensions = "org.jetbrains.kotlin.android.extensions:1.7.22"
+dagger-hilt-android-plugin = { id = "dagger.hilt.android.plugin", version.ref = "com-google-dagger" }
+kotlin = { id = "kotlin", version.ref = "org-jetbrains-kotlin" }
+kotlin-android = { id = "kotlin-android", version.ref = "org-jetbrains-kotlin" }
+kotlin-kapt = { id = "kotlin-kapt", version.ref = "org-jetbrains-kotlin" }
+kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "org-jetbrains-kotlin" }
+kotlin-scripting = { id = "kotlin-scripting", version.ref = "com-google-dagger" }
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin" }
