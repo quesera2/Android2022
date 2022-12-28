@@ -58,7 +58,6 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.com.google.android.material)
     implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.ui.ui.tooling.preview)
     implementation(libs.androidx.lifecycle.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.activity.compose)
