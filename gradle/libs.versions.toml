@@ -4,7 +4,7 @@ androidx-hilt = "1.0.0"
 androidx-lifecycle = "2.4.1"
 androidx-room = "2.4.3"
 com-google-accompanist = "0.24.5-alpha"
-com-google-dagger = "2.42"
+com-google-dagger = "2.44.2"
 org-jetbrains-kotlin = "1.6.21"
 
 [libraries]
