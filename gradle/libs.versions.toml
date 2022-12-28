@@ -39,7 +39,7 @@ com-google-android-material-compose-theme-adapter-3 = "com.google.android.materi
 com-google-dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "com-google-dagger" }
 com-google-dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "com-google-dagger" }
 com-google-dagger-hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "com-google-dagger" }
-com-google-firebase-firebase-bom = "com.google.firebase:firebase-bom:30.3.2"
+com-google-firebase-firebase-bom = "com.google.firebase:firebase-bom:30.5.0"
 com-google-firebase-firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx" }
 com-google-firebase-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 com-google-gms-google-services = "com.google.gms:google-services:4.3.13"
