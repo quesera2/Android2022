@@ -8,7 +8,7 @@ com-google-dagger = "2.44.2"
 org-jetbrains-kotlin = "1.6.21"
 
 [libraries]
-androidx-activity-activity-compose = "androidx.activity:activity-compose:1.4.0"
+androidx-activity-activity-compose = "androidx.activity:activity-compose:1.6.1"
 androidx-appcompat = "androidx.appcompat:appcompat:1.5.1"
 androidx-compose-compiler = "androidx.compose.compiler:compiler:1.3.2"
 androidx-compose-material3 = "androidx.compose.material3:material3:1.0.1"
