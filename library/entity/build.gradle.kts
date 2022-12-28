@@ -7,11 +7,11 @@ plugins {
 
 android {
     namespace = "que.sera.sera.android2022.entity"
-    compileSdk = 32
+    compileSdk = 33
 
     defaultConfig {
         minSdk = 26
-        targetSdk = 32
+        targetSdk = 33
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -48,5 +48,4 @@ dependencies {
 
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.espresso.espresso.core)
-    androidTestImplementation(libs.androidx.compose.ui.ui.test.junit4)
 }

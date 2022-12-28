@@ -7,13 +7,13 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
     namespace = "que.sera.sera.android2022"
 
     defaultConfig {
         applicationId = "que.sera.sera.android2022"
         minSdk = 26
-        targetSdk = 32
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -44,7 +44,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0-beta03"
+        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
     packagingOptions {
         resources {
@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.androidx.core.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.com.google.android.material)
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.ui.tooling.preview)
     implementation(libs.androidx.lifecycle.lifecycle.runtime.ktx)
