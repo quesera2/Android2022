@@ -8,6 +8,7 @@ plugins {
 
 android {
     compileSdk = 32
+    namespace = "que.sera.sera.android2022"
 
     defaultConfig {
         applicationId = "que.sera.sera.android2022"

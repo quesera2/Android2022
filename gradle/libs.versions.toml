@@ -54,12 +54,8 @@ org-jetbrains-kotlinx-kotlinx-coroutines-play-services = "org.jetbrains.kotlinx:
 com-google-accompanist-accompanist-systemuicontroller = "com.google.accompanist:accompanist-systemuicontroller:0.24.10-beta"
 
 [plugins]
-android = "android:7.2.1"
-android-library = "android-library:7.2.1"
-com-android-application = "com.android.application:7.2.1"
-com-android-library = "com.android.library:7.2.1"
-com-android-lint = "com.android.lint:7.2.1"
-com-android-test = "com.android.test:7.2.1"
+com-android-application = "com.android.application:7.3.1"
+com-android-library = "com.android.library:7.3.1"
 com-github-ben-manes-versions = "com.github.ben-manes.versions:0.42.0"
 com-google-dagger-hilt-android = "com.google.dagger.hilt.android:2.42"
 com-google-gms-google-services = "com.google.gms.google-services:4.3.13"
