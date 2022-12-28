@@ -83,7 +83,7 @@ dependencies {
     implementation(libs.com.google.accompanist.accompanist.navigation.animation)
     implementation(libs.com.google.accompanist.accompanist.navigation.material)
 
-    implementation(libs.com.google.android.material.compose.theme.adapter.get3())
+    implementation(libs.com.google.accompanist.accompanist.themeadapter.material3)
 
     testImplementation(libs.io.mockk)
 

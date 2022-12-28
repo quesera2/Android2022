@@ -17,7 +17,6 @@ import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.bottomSheet
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.google.android.material.composethemeadapter3.Mdc3Theme
 import que.sera.sera.android2022.ui.detail.DetailScreen
 import que.sera.sera.android2022.ui.main.MainScreen
 
@@ -26,7 +25,7 @@ import que.sera.sera.android2022.ui.main.MainScreen
 @ExperimentalMaterial3Api
 @Composable
 fun MyApp() {
-    Mdc3Theme {
+    AppTheme {
         val systemUiController = rememberSystemUiController()
         SideEffect {
             systemUiController.setSystemBarsColor(
@@ -61,7 +60,7 @@ fun MyApp() {
                     DetailScreen(
                         viewModel = hiltViewModel(),
                         navController = navController,
-                        toDoId = backStackEntry.arguments!!.getInt("toDoId")
+                        toDoId = backStackEntry.arguments?.getInt("toDoId") ?: 0
                     )
                 }
             }

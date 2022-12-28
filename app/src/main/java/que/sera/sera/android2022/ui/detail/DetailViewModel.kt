@@ -3,12 +3,14 @@ package que.sera.sera.android2022.ui.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import que.sera.sera.android2022.entity.ToDo
+import kotlinx.coroutines.withContext
 import que.sera.sera.android2022.data.repository.todo.ToDoRepository
-import java.util.*
+import que.sera.sera.android2022.entity.ToDo
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,7 +31,11 @@ class DetailViewModel @Inject constructor(
     }
 
     fun registerToDo(toDoText: String) = viewModelScope.launch {
-        ToDo(name = toDoText).let { toDoRepository.registerToDo(it) }
+        withContext(NonCancellable) {
+            val newToDo = ToDo(name = toDoText)
+            toDoRepository.registerToDo(newToDo)
+            //TODO: 登録処理後に閉じるように処理を変える
+        }
     }
 
     fun updateToDo(toDoText: String) {

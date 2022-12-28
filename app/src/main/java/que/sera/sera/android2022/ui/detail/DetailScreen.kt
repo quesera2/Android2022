@@ -4,10 +4,10 @@ import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -23,7 +23,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.google.android.material.composethemeadapter3.Mdc3Theme
+import que.sera.sera.android2022.ui.app.AppTheme
 
 @ExperimentalMaterial3Api
 @Composable
@@ -47,6 +47,7 @@ fun DetailScreen(
                 inputEnabled = false,
                 onCancel = cancel
             )
+
             is DetailViewModelState.InputInitial -> ReminderRegister(
                 buttonLabel = "登録する",
                 onRegister = { toDoText ->
@@ -55,6 +56,7 @@ fun DetailScreen(
                 },
                 onCancel = cancel
             )
+
             is DetailViewModelState.InputEdit -> ReminderRegister(
                 initialToDoText = currentState.toDo.name,
                 buttonLabel = "更新する",
@@ -68,6 +70,7 @@ fun DetailScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReminderRegister(
     modifier: Modifier = Modifier,
@@ -158,7 +161,7 @@ fun ReminderRegister(
 @Preview(uiMode = UI_MODE_NIGHT_MASK)
 @Composable
 fun PreviewReminderRegister() {
-    Mdc3Theme {
+    AppTheme {
         ReminderRegister(
             initialToDoText = "テスト",
             onRegister = { },

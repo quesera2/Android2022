@@ -1,43 +1,47 @@
 package que.sera.sera.android2022.ui.main
 
 import android.text.format.DateFormat
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.DismissValue
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.rememberDismissState
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.onClick
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.google.android.material.composethemeadapter3.Mdc3Theme
-import que.sera.sera.android2022.R
 import que.sera.sera.android2022.entity.ToDo
 import que.sera.sera.android2022.entity.ToDoStatus
+import que.sera.sera.android2022.ui.app.AppTheme
 import java.text.SimpleDateFormat
 
 @ExperimentalMaterial3Api
@@ -47,21 +51,12 @@ fun MainScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
-    val topAppBarScrollState = rememberTopAppBarScrollState()
-    val scrollBehavior = remember {
-        TopAppBarDefaults.enterAlwaysScrollBehavior(
-            state = topAppBarScrollState
-        )
-    }
-
     Scaffold(
         modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
             .systemBarsPadding(),
         topBar = {
             val showTaskCompleted by viewModel.showCompletedTask.collectAsState(initial = false)
-            AppBar(
-                scrollBehavior = scrollBehavior,
+            MainAppBar(
                 showCompletedTask = showTaskCompleted,
                 onClick = { viewModel.updateShowCompleteTask(it) },
                 modifier = Modifier.windowInsetsPadding(
@@ -89,9 +84,6 @@ fun MainScreen(
                     onClick = {
                         navController.navigate("detail/${it.id}")
                     },
-                    onSwipe = {
-                        viewModel.doneToDo(it)
-                    }
                 )
 
                 val showProgress by viewModel.showProgress.collectAsState(initial = true)
@@ -105,50 +97,12 @@ fun MainScreen(
     )
 }
 
-@Composable
-fun AppBar(
-    modifier: Modifier = Modifier,
-    scrollBehavior: TopAppBarScrollBehavior,
-    showCompletedTask: Boolean,
-    onClick: (Boolean) -> Unit
-) {
-    SmallTopAppBar(
-        modifier = modifier.semantics {
-            val label = if (showCompletedTask) {
-                "完了したタスクを表示しない"
-            } else {
-                "完了したタスクを表示する"
-            }
-            this.onClick(label = label, action = null)
-        },
-        title = { Text(text = "タスク一覧") },
-        actions = {
-            IconButton(onClick = { onClick(!showCompletedTask) }) {
-                val tintColor = if (showCompletedTask) {
-                    MaterialTheme.colorScheme.primary.copy(0.4f)
-                } else {
-                    MaterialTheme.colorScheme.primary
-                }
 
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_baseline_filter_list_24),
-                    contentDescription = null,
-                    tint = tintColor
-                )
-            }
-        },
-        scrollBehavior = scrollBehavior
-    )
-}
-
-
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun ToDoListView(
     listItems: List<ToDo>,
     modifier: Modifier = Modifier,
     onClick: (ToDo) -> Unit = { },
-    onSwipe: (ToDo) -> Unit = { },
 ) {
     val locale = LocalContext.current.resources.configuration.locales[0]
     val formatter = SimpleDateFormat(DateFormat.getBestDateTimePattern(locale, "yyyyMMMdd"), locale)
@@ -157,66 +111,18 @@ fun ToDoListView(
         modifier = modifier
     ) {
         items(listItems, key = { it.id }) { item ->
-            val dismissState = rememberDismissState(
-                confirmStateChange = {
-                    if (item.status == ToDoStatus.Incomplete && it == DismissValue.DismissedToEnd) {
-                        onSwipe(item)
-                        return@rememberDismissState true
-                    }
-                    false
-                }
-            )
-            // TODO: タスクを完了したアイテムの表示が戻らないため再表示のタイミングで初期状態に戻している。
-            //  ただしスワイプ可能状態はそのままなため、ワークアラウンドとしては不完全。
-            if (dismissState.currentValue != DismissValue.Default) {
-                LaunchedEffect(Unit) {
-                    dismissState.snapTo(DismissValue.Default)
-                }
+            when (item.status) {
+                ToDoStatus.Incomplete -> InCompleteToDoListItem(
+                    toDo = item,
+                    formatter = formatter,
+                    onClick = onClick
+                )
+
+                ToDoStatus.Completed -> CompletedToDoListItem(
+                    toDo = item,
+                    formatter = formatter
+                )
             }
-
-            SwipeToDismiss(
-                state = dismissState,
-                modifier = Modifier.animateItemPlacement(),
-                background = {
-                    val color by animateColorAsState(
-                        when (dismissState.targetValue) {
-                            DismissValue.Default -> MaterialTheme.colorScheme.background
-                            DismissValue.DismissedToEnd -> Color.Green
-                            DismissValue.DismissedToStart -> MaterialTheme.colorScheme.background
-                        }
-                    )
-                    val scale by animateFloatAsState(
-                        if (dismissState.targetValue == DismissValue.Default) 0.75f else 1f
-                    )
-
-                    Box(
-                        Modifier
-                            .fillMaxSize()
-                            .background(color)
-                            .padding(horizontal = 20.dp),
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        Icon(
-                            Icons.Default.Done,
-                            contentDescription = "check mark",
-                            modifier = Modifier.scale(scale)
-                        )
-                    }
-                },
-                dismissContent = {
-                    when (item.status) {
-                        ToDoStatus.Incomplete -> InCompleteToDoListItem(
-                            toDo = item,
-                            formatter = formatter,
-                            onClick = onClick
-                        )
-                        ToDoStatus.Completed -> CompletedToDoListItem(
-                            toDo = item,
-                            formatter = formatter
-                        )
-                    }
-                }
-            )
         }
     }
 }
@@ -262,7 +168,9 @@ fun CompletedToDoListItem(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column {
+            Column(
+                modifier = Modifier.weight(1.0f)
+            ) {
                 Text(
                     text = toDo.name,
                     color = MaterialTheme.colorScheme.secondary,
@@ -278,9 +186,6 @@ fun CompletedToDoListItem(
                     fontSize = MaterialTheme.typography.labelSmall.fontSize
                 )
             }
-            Spacer(
-                modifier = Modifier.weight(1f)
-            )
             Icon(
                 Icons.Filled.Check,
                 contentDescription = "タスク状態",
@@ -293,7 +198,7 @@ fun CompletedToDoListItem(
 @Preview(showBackground = true)
 @Composable
 fun PreviewToDoList() {
-    Mdc3Theme {
+    AppTheme {
         ToDoListView(
             listItems = listOf(
                 ToDo(
