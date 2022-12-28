@@ -51,7 +51,7 @@ org-jetbrains-kotlin-kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kot
 org-jetbrains-kotlin-kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "org-jetbrains-kotlin" }
 org-jetbrains-kotlin-kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "org-jetbrains-kotlin" }
 org-jetbrains-kotlinx-kotlinx-coroutines-play-services = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4"
-com-google-accompanist-accompanist-systemuicontroller = "com.google.accompanist:accompanist-systemuicontroller:0.24.10-beta"
+com-google-accompanist-accompanist-systemuicontroller = "com.google.accompanist:accompanist-systemuicontroller:0.28.0"
 
 [plugins]
 android = "android:7.2.1"
