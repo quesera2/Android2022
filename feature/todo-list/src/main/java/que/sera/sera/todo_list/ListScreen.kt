@@ -27,21 +27,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import androidx.navigation.NavController
 import que.sera.sera.core_ui.AppTheme
 import que.sera.sera.todo.entity.ToDo
 import que.sera.sera.todo.entity.ToDoStatus
 
 @ExperimentalMaterial3Api
 @Composable
-fun MainScreen(
+fun ListScreen(
     viewModel: ListViewModel,
-    navController: NavController,
-    modifier: Modifier = Modifier,
+    createToDo: () -> Unit,
+    editToDo: (id: Int) -> Unit,
 ) {
     Scaffold(
-        modifier = modifier
-            .systemBarsPadding(),
+        modifier = Modifier.systemBarsPadding(),
         topBar = {
             val showTaskCompleted by viewModel.showCompletedTask.collectAsState(initial = false)
             ListAppBar(
@@ -54,9 +52,7 @@ fun MainScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {
-                    navController.navigate("detail/0")
-                }
+                onClick = createToDo
             ) {
                 Icon(Icons.Filled.Add, contentDescription = "追加")
             }
@@ -74,7 +70,7 @@ fun MainScreen(
                     listItems = listItemsState,
                     showProgress = showProgress,
                     onChecked = { todo, completed -> viewModel.updateTask(todo, completed) },
-                    onClick = { navController.navigate("detail/${it.id}") },
+                    onClick = { editToDo(it.id) },
                 )
             }
         }

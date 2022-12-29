@@ -19,7 +19,7 @@ import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import que.sera.sera.core_ui.AppTheme
 import que.sera.sera.todo_detail.DetailScreen
-import que.sera.sera.todo_list.MainScreen
+import que.sera.sera.todo_list.ListScreen
 
 @ExperimentalMaterialNavigationApi
 @ExperimentalAnimationApi
@@ -47,9 +47,10 @@ fun MyApp() {
                 composable(
                     route = "main"
                 ) {
-                    MainScreen(
+                    ListScreen(
                         viewModel = hiltViewModel(),
-                        navController = navController
+                        createToDo = { navController.navigate("detail/0") },
+                        editToDo = { navController.navigate("detail/$it") }
                     )
                 }
                 bottomSheet(
