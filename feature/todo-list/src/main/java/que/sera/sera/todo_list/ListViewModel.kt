@@ -45,11 +45,11 @@ class ListViewModel @Inject constructor(
         prefRepository.updateShowCompletedTask(newValue)
     }
 
-    fun doneToDo(toDo: ToDo) = viewModelScope.launch {
-        toDo.copy(
-            status = ToDoStatus.Completed
-        ).also {
-            toDoRepository.updateToDo(it)
-        }
+    fun updateTask(toDo: ToDo, complete: Boolean) = viewModelScope.launch {
+        val newStatus = if (complete) ToDoStatus.Completed else ToDoStatus.Incomplete
+        val updatedItem = toDo.copy(
+            status = newStatus
+        )
+        toDoRepository.updateToDo(updatedItem)
     }
 }

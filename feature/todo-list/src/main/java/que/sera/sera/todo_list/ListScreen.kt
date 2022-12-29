@@ -1,5 +1,6 @@
 package que.sera.sera.todo_list
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -72,6 +73,7 @@ fun MainScreen(
                 ToDoListContent(
                     listItems = listItemsState,
                     showProgress = showProgress,
+                    onChecked = { todo, completed -> viewModel.updateTask(todo, completed) },
                     onClick = { navController.navigate("detail/${it.id}") },
                 )
             }
@@ -84,6 +86,7 @@ private fun ToDoListContent(
     listItems: List<ToDo>,
     showProgress: Boolean,
     onClick: (ToDo) -> Unit,
+    onChecked: (ToDo, Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -97,17 +100,21 @@ private fun ToDoListContent(
             ToDoListView(
                 listItems = listItems,
                 onClick = onClick,
-                modifier = Modifier.fillMaxSize()
+                onChecked = onChecked,
+                modifier = Modifier
+                    .fillMaxSize()
             )
         }
     }
 
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ToDoListView(
     listItems: List<ToDo>,
     onClick: (ToDo) -> Unit,
+    onChecked: (ToDo, Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -119,7 +126,9 @@ private fun ToDoListView(
         ) { item ->
             ToDoListItem(
                 toDo = item,
-                onClick = onClick
+                onClick = { onClick(item) },
+                onChecked = { onChecked(item, it) },
+                modifier = Modifier.animateItemPlacement()
             )
         }
     }
@@ -155,6 +164,7 @@ private fun PreviewToDoListItem(
         ToDoListContent(
             listItems = state.first,
             showProgress = state.second,
+            onChecked = { _, _ -> },
             onClick = {}
         )
     }
