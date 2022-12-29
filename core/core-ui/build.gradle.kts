@@ -50,7 +50,6 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.window)
     implementation(libs.androidx.navigation.navigation.compose)
-    implementation(libs.com.google.accompanist.accompanist.systemuicontroller)
 
     implementation(libs.androidx.hilt.hilt.navigation.compose)
     implementation(libs.com.google.accompanist.accompanist.navigation.animation)

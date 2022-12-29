@@ -1,12 +1,12 @@
 plugins {
     id("com.android.library")
-    id("kotlin-android")
+    id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
 }
 
 android {
-    namespace = "que.sera.sera.todo_detail"
+    namespace = "que.sera.sera.todo"
     compileSdk = 33
 
     defaultConfig {
@@ -33,37 +33,33 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
-    }
 }
 
 dependencies {
-    implementation(projects.data.todo)
-
-    implementation(projects.core.coreUi)
 
     implementation(libs.androidx.core.core.ktx)
+    implementation(libs.androidx.appcompat)
     implementation(libs.com.google.android.material)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.ui)
-    debugImplementation(libs.androidx.compose.ui.ui.tooling)
-    implementation(libs.androidx.compose.ui.ui.tooling.preview)
-    implementation(libs.androidx.lifecycle.lifecycle.runtime.ktx)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.window)
 
     implementation(libs.com.google.dagger.hilt.android)
     kapt(libs.com.google.dagger.hilt.android.compiler)
-    implementation(libs.androidx.lifecycle.lifecycle.viewmodel.compose)
     kapt(libs.androidx.hilt.hilt.compiler)
 
-    implementation(libs.com.google.accompanist.accompanist.navigation.animation)
-    implementation(libs.com.google.accompanist.accompanist.navigation.material)
+    implementation(libs.androidx.datastore.datastore.preferences)
 
-    testImplementation(libs.io.mockk)
+    implementation(libs.androidx.room.room.runtime)
+    implementation(libs.androidx.room.room.ktx)
+    kapt(libs.androidx.room.room.compiler)
+
+    implementation(platform(libs.com.google.firebase.firebase.bom))
+    implementation(libs.com.google.firebase.firebase.analytics)
+    implementation(libs.com.google.firebase.firebase.firestore.ktx)
+    implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.play.services)
+
     testImplementation(libs.junit)
+    testImplementation(libs.io.mockk)
+    testImplementation(libs.androidx.room.room.testing)
+
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.espresso.core)
 }

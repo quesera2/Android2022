@@ -6,8 +6,7 @@ include(
     ":feature:todo-list",
     ":feature:todo-detail",
 
-    ":library:data",
-    ":library:entity",
+    ":data:todo",
 )
 
 dependencyResolutionManagement {

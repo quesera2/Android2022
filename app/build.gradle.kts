@@ -73,6 +73,7 @@ dependencies {
     implementation(libs.androidx.hilt.hilt.navigation.compose)
     implementation(libs.com.google.accompanist.accompanist.navigation.animation)
     implementation(libs.com.google.accompanist.accompanist.navigation.material)
+    implementation(libs.com.google.accompanist.accompanist.systemuicontroller)
 
     testImplementation(libs.junit)
     testImplementation(libs.io.mockk)

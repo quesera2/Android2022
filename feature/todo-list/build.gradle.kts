@@ -42,8 +42,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.library.data)
-    implementation(projects.library.entity)
+    implementation(projects.data.todo)
 
     implementation(projects.core.coreUi)
 

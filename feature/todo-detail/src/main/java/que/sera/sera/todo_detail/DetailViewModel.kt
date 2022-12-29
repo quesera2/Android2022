@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import que.sera.sera.android2022.data.repository.todo.ToDoRepository
-import que.sera.sera.android2022.entity.ToDo
+import que.sera.sera.todo.repository.todo.ToDoRepository
+import que.sera.sera.todo.entity.ToDo
 import java.util.Date
 import javax.inject.Inject
 

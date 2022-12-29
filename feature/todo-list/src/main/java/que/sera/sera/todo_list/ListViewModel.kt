@@ -6,10 +6,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import que.sera.sera.android2022.data.repository.pref.PreferencesRepository
-import que.sera.sera.android2022.data.repository.todo.ToDoRepository
-import que.sera.sera.android2022.entity.ToDo
-import que.sera.sera.android2022.entity.ToDoStatus
+import que.sera.sera.todo.entity.ToDo
+import que.sera.sera.todo.entity.ToDoStatus
+import que.sera.sera.todo.repository.pref.PreferencesRepository
+import que.sera.sera.todo.repository.todo.ToDoRepository
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)

@@ -1,6 +1,6 @@
 package que.sera.sera.todo_detail
 
-import que.sera.sera.android2022.entity.ToDo
+import que.sera.sera.todo.entity.ToDo
 
 sealed interface DetailViewModelState {
 
