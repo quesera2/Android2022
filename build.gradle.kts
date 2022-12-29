@@ -14,6 +14,10 @@ buildscript {
     }
 }
 
+plugins {
+    alias(libs.plugins.com.autonomousapps.dependency.analysis)
+}
+
 task<Delete>("clean") {
     delete = setOf(rootProject.buildDir)
 }
