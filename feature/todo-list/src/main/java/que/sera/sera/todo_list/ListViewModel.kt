@@ -1,4 +1,4 @@
-package que.sera.sera.android2022.ui.main
+package que.sera.sera.todo_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,16 +6,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import que.sera.sera.android2022.entity.ToDo
-import que.sera.sera.android2022.entity.ToDoStatus
-
 import que.sera.sera.android2022.data.repository.pref.PreferencesRepository
 import que.sera.sera.android2022.data.repository.todo.ToDoRepository
+import que.sera.sera.android2022.entity.ToDo
+import que.sera.sera.android2022.entity.ToDoStatus
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class ListViewModel @Inject constructor(
     private val toDoRepository: ToDoRepository,
     private val prefRepository: PreferencesRepository,
 ) : ViewModel() {

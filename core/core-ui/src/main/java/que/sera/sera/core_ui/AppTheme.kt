@@ -1,4 +1,4 @@
-package que.sera.sera.android2022.ui.app
+package que.sera.sera.core_ui
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

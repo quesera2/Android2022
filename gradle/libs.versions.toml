@@ -65,3 +65,4 @@ kotlin-kapt = { id = "kotlin-kapt", version.ref = "org-jetbrains-kotlin" }
 kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "org-jetbrains-kotlin" }
 kotlin-scripting = { id = "kotlin-scripting", version.ref = "com-google-dagger" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin" }
+com-autonomousapps-dependency-analysis = "com.autonomousapps.dependency-analysis:1.18.0"

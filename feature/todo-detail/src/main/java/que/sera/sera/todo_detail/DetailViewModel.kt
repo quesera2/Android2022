@@ -1,4 +1,4 @@
-package que.sera.sera.android2022.ui.detail
+package que.sera.sera.todo_detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

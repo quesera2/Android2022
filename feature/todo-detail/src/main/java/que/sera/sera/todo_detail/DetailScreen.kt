@@ -1,4 +1,4 @@
-package que.sera.sera.android2022.ui.detail
+package que.sera.sera.todo_detail
 
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import androidx.compose.foundation.layout.*
@@ -23,7 +23,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import que.sera.sera.android2022.ui.app.AppTheme
+import que.sera.sera.core_ui.AppTheme
 
 @ExperimentalMaterial3Api
 @Composable

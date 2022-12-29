@@ -1,4 +1,4 @@
-package que.sera.sera.android2022.ui.detail
+package que.sera.sera.todo_detail
 
 import que.sera.sera.android2022.entity.ToDo
 

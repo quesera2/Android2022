@@ -17,8 +17,9 @@ import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.bottomSheet
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import que.sera.sera.android2022.ui.detail.DetailScreen
-import que.sera.sera.android2022.ui.main.MainScreen
+import que.sera.sera.core_ui.AppTheme
+import que.sera.sera.todo_detail.DetailScreen
+import que.sera.sera.todo_list.MainScreen
 
 @ExperimentalMaterialNavigationApi
 @ExperimentalAnimationApi

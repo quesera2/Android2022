@@ -1,4 +1,4 @@
-package que.sera.sera.android2022.ui.main
+package que.sera.sera.todo_list
 
 import android.text.format.DateFormat
 import androidx.compose.foundation.clickable
@@ -41,13 +41,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import que.sera.sera.android2022.entity.ToDo
 import que.sera.sera.android2022.entity.ToDoStatus
-import que.sera.sera.android2022.ui.app.AppTheme
+import que.sera.sera.core_ui.AppTheme
 import java.text.SimpleDateFormat
 
 @ExperimentalMaterial3Api
 @Composable
 fun MainScreen(
-    viewModel: MainViewModel,
+    viewModel: ListViewModel,
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
@@ -56,7 +56,7 @@ fun MainScreen(
             .systemBarsPadding(),
         topBar = {
             val showTaskCompleted by viewModel.showCompletedTask.collectAsState(initial = false)
-            MainAppBar(
+            ListAppBar(
                 showCompletedTask = showTaskCompleted,
                 onClick = { viewModel.updateShowCompleteTask(it) },
                 modifier = Modifier.windowInsetsPadding(

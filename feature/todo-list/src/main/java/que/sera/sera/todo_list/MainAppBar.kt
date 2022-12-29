@@ -1,4 +1,4 @@
-package que.sera.sera.android2022.ui.main
+package que.sera.sera.todo_list
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -11,11 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.semantics
-import que.sera.sera.android2022.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainAppBar(
+fun ListAppBar(
     modifier: Modifier = Modifier,
     showCompletedTask: Boolean,
     onClick: (Boolean) -> Unit

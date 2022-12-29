@@ -1,7 +1,13 @@
 include(
     ":app",
+
+    ":core:core-ui",
+
+    ":feature:todo-list",
+    ":feature:todo-detail",
+
     ":library:data",
-    ":library:entity"
+    ":library:entity",
 )
 
 dependencyResolutionManagement {

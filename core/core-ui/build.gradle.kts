@@ -1,26 +1,18 @@
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
-    id("com.google.gms.google-services")
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
+    namespace = "que.sera.sera.core_ui"
     compileSdk = 33
-    namespace = "que.sera.sera.android2022"
 
     defaultConfig {
-        applicationId = "que.sera.sera.android2022"
         minSdk = 26
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -38,7 +30,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
     }
     buildFeatures {
         compose = true
@@ -46,17 +37,9 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
-    implementation(projects.core.coreUi)
-    implementation(projects.feature.todoList)
-    implementation(projects.feature.todoDetail)
 
     implementation(libs.androidx.core.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -72,15 +55,10 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.ui.tooling)
     implementation(libs.androidx.window)
 
-    implementation(libs.com.google.dagger.hilt.android)
-    kapt(libs.com.google.dagger.hilt.android.compiler)
-    implementation(libs.androidx.lifecycle.lifecycle.viewmodel.compose)
-
     implementation(libs.androidx.navigation.navigation.compose)
 
     implementation(libs.com.google.accompanist.accompanist.systemuicontroller)
 
-    kapt(libs.androidx.hilt.hilt.compiler)
 
     implementation(libs.androidx.hilt.hilt.navigation.compose)
     implementation(libs.com.google.accompanist.accompanist.navigation.animation)
