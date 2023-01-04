@@ -1,8 +1,13 @@
 package que.sera.sera.todo_list
 
 import android.text.format.DateFormat
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -84,11 +89,30 @@ private fun HeadLineText(
         MaterialTheme.colorScheme.secondary to TextDecoration.LineThrough
     }
 
-    Text(
-        text = text,
-        color = textColor,
-        textDecoration = textDecoration,
-    )
+    Box {
+        AnimatedVisibility(
+            visible = !isCompleted,
+            enter = fadeIn(tween()),
+            exit = fadeOut(tween())
+        ) {
+            Text(
+                text = text,
+                color = textColor,
+                textDecoration = textDecoration,
+            )
+        }
+        AnimatedVisibility(
+            visible = isCompleted,
+            enter = fadeIn(tween()),
+            exit = fadeOut(tween())
+        ) {
+            Text(
+                text = text,
+                color = textColor,
+                textDecoration = textDecoration,
+            )
+        }
+    }
 }
 
 @Preview
