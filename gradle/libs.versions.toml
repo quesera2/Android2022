@@ -29,7 +29,7 @@ androidx-room-room-runtime = { module = "androidx.room:room-runtime", version.re
 androidx-room-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
 androidx-room-room-testing = { module = "androidx.room:room-testing", version.ref = "androidx-room" }
 androidx-test-espresso-espresso-core = "androidx.test.espresso:espresso-core:3.5.0"
-androidx-test-ext-junit = "androidx.test.ext:junit:1.1.4"
+androidx-test-ext-junit = "androidx.test.ext:junit:1.1.5"
 androidx-window = "androidx.window:window:1.0.0"
 com-android-tools-build-gradle = "com.android.tools.build:gradle:7.3.1"
 com-google-accompanist-accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "com-google-accompanist" }
