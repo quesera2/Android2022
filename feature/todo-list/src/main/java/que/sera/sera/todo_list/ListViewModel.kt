@@ -19,27 +19,21 @@ class ListViewModel @Inject constructor(
     private val prefRepository: PreferencesRepository,
 ) : ViewModel() {
 
-    val showCompletedTask: Flow<Boolean>
-        get() = prefRepository
-            .showCompletedTask
-            .stateIn(viewModelScope, SharingStarted.Lazily, true)
+    val showCompletedTask: StateFlow<Boolean> = prefRepository
+        .showCompletedTask
+        .stateIn(viewModelScope, SharingStarted.Lazily, true)
 
-    private val _showProgress: MutableStateFlow<Boolean> = MutableStateFlow(true)
-    val showProgress: Flow<Boolean>
-        get() = _showProgress.asStateFlow()
+    private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
+    val uiState: StateFlow<UiState>
+        get() = _uiState.asStateFlow()
 
-    init {
-        viewModelScope.launch {
-            getToDos().collect {
-                _showProgress.value = false
-            }
-        }
+    fun fetchToDos() = viewModelScope.launch {
+        _uiState.run { emit(value.onShowProgress()) }
+
+        val items = showCompletedTask.flatMapLatest(toDoRepository::fetchToDos)
+
+        _uiState.run { emit(value.onFetchItems(items)) }
     }
-
-    fun getToDos(): Flow<List<ToDo>> = showCompletedTask
-        .flatMapLatest { showCompleteTask ->
-            toDoRepository.fetchToDos(showCompleteTask)
-        }
 
     fun updateShowCompleteTask(newValue: Boolean) = viewModelScope.launch {
         prefRepository.updateShowCompletedTask(newValue)

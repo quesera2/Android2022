@@ -10,9 +10,10 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -38,14 +39,8 @@ internal fun ToDoListItem(
         SimpleDateFormat(DateFormat.getBestDateTimePattern(locale, "yyyyMMMdd"), locale)
     }
 
-    val isCompleted by remember(toDo) {
-        derivedStateOf { toDo.status == ToDoStatus.Incomplete }
-    }
-
-    val (textColor, textDecoration) = if (isCompleted) {
-        Color.Companion.Unspecified to TextDecoration.None
-    } else {
-        MaterialTheme.colorScheme.secondary to TextDecoration.LineThrough
+    var isCompleted: Boolean by remember(toDo) {
+        mutableStateOf(toDo.status == ToDoStatus.Incomplete)
     }
 
     ListItem(
@@ -54,10 +49,9 @@ internal fun ToDoListItem(
             onClick = onClick
         ),
         headlineText = {
-            Text(
+            HeadLineText(
                 text = toDo.name,
-                color = textColor,
-                textDecoration = textDecoration,
+                isCompleted = isCompleted
             )
         },
         supportingText = {
@@ -70,9 +64,30 @@ internal fun ToDoListItem(
         leadingContent = {
             Checkbox(
                 checked = !isCompleted,
-                onCheckedChange = onChecked
+                onCheckedChange = {
+                    isCompleted = !it
+                    onChecked(it)
+                }
             )
         }
+    )
+}
+
+@Composable
+private fun HeadLineText(
+    text: String,
+    isCompleted: Boolean
+) {
+    val (textColor, textDecoration) = if (isCompleted) {
+        Color.Companion.Unspecified to TextDecoration.None
+    } else {
+        MaterialTheme.colorScheme.secondary to TextDecoration.LineThrough
+    }
+
+    Text(
+        text = text,
+        color = textColor,
+        textDecoration = textDecoration,
     )
 }
 

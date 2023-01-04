@@ -20,6 +20,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -27,6 +28,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import que.sera.sera.core_ui.AppTheme
 import que.sera.sera.todo.entity.ToDo
 import que.sera.sera.todo.entity.ToDoStatus
@@ -38,10 +41,14 @@ fun ListScreen(
     createToDo: () -> Unit,
     editToDo: (id: Int) -> Unit,
 ) {
+    LaunchedEffect(Unit) {
+        viewModel.fetchToDos()
+    }
+
     Scaffold(
         modifier = Modifier.systemBarsPadding(),
         topBar = {
-            val showTaskCompleted by viewModel.showCompletedTask.collectAsState(initial = false)
+            val showTaskCompleted by viewModel.showCompletedTask.collectAsState()
             ListAppBar(
                 showCompletedTask = showTaskCompleted,
                 onClick = { viewModel.updateShowCompleteTask(it) },
@@ -63,12 +70,11 @@ fun ListScreen(
                     .fillMaxSize()
                     .padding(paddingValues)
             ) {
-                val listItemsState by viewModel.getToDos().collectAsState(emptyList())
-                val showProgress by viewModel.showProgress.collectAsState(initial = true)
+                val uiState by viewModel.uiState.collectAsState()
 
                 ToDoListContent(
-                    listItems = listItemsState,
-                    showProgress = showProgress,
+                    listItems = uiState.items,
+                    showProgress = uiState.showProgress,
                     onChecked = { todo, completed -> viewModel.updateTask(todo, completed) },
                     onClick = { editToDo(it.id) },
                 )
@@ -79,7 +85,7 @@ fun ListScreen(
 
 @Composable
 private fun ToDoListContent(
-    listItems: List<ToDo>,
+    listItems: Flow<List<ToDo>>,
     showProgress: Boolean,
     onClick: (ToDo) -> Unit,
     onChecked: (ToDo, Boolean) -> Unit,
@@ -108,16 +114,18 @@ private fun ToDoListContent(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ToDoListView(
-    listItems: List<ToDo>,
+    listItems: Flow<List<ToDo>>,
     onClick: (ToDo) -> Unit,
     onChecked: (ToDo, Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val toDos by listItems.collectAsState(initial = emptyList())
+
     LazyColumn(
         modifier = modifier
     ) {
         items(
-            items = listItems,
+            items = toDos,
             key = { it.id }
         ) { item ->
             ToDoListItem(
@@ -158,7 +166,7 @@ private fun PreviewToDoListItem(
 ) {
     AppTheme {
         ToDoListContent(
-            listItems = state.first,
+            listItems = flowOf(state.first),
             showProgress = state.second,
             onChecked = { _, _ -> },
             onClick = {}
