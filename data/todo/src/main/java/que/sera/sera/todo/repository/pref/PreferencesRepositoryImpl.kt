@@ -18,11 +18,11 @@ internal class PreferencesRepositoryImpl(
     override val showCompletedTask: Flow<Boolean>
         get() = dataStore
             .data
-            .map {
-                it[SHOW_COMPLETED_TASK] ?: true
-            }
+            .map { it[SHOW_COMPLETED_TASK] ?: true }
 
-    override suspend fun updateShowCompletedTask(newValue: Boolean) {
+    override suspend fun updateShowCompletedTask(
+        newValue: Boolean
+    ) {
         dataStore.edit {
             it[SHOW_COMPLETED_TASK] = newValue
         }

@@ -38,7 +38,7 @@ class ListViewModel @Inject constructor(
 
     fun getToDos(): Flow<List<ToDo>> = showCompletedTask
         .flatMapLatest { showCompleteTask ->
-            toDoRepository.getToDos(showCompleteTask)
+            toDoRepository.fetchToDos(showCompleteTask)
         }
 
     fun updateShowCompleteTask(newValue: Boolean) = viewModelScope.launch {

@@ -5,7 +5,7 @@ import que.sera.sera.todo.entity.ToDo
 
 interface ToDoRepository {
 
-    fun getToDos(showComplete: Boolean): Flow<List<ToDo>>
+    fun fetchToDos(showComplete: Boolean): Flow<List<ToDo>>
 
     suspend fun getToDo(id: Int): ToDo?
 
