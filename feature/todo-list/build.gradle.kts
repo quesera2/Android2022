@@ -39,6 +39,11 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
@@ -66,4 +71,5 @@ dependencies {
 
     testImplementation(libs.io.mockk)
     testImplementation(libs.junit)
+    testImplementation(libs.bundles.unit.test)
 }
