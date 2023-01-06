@@ -1,7 +1,6 @@
 package que.sera.sera.todo_list
 
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.core.test.testCoroutineScheduler
 import io.mockk.Runs
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
