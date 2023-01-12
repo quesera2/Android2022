@@ -55,8 +55,6 @@ junit = "junit:junit:4.13.2"
 org-jacoco-org-jacoco-ant = "org.jacoco:org.jacoco.ant:0.8.8"
 org-jetbrains-kotlin-kotlin-annotation-processing-gradle = { module = "org.jetbrains.kotlin:kotlin-annotation-processing-gradle", version.ref = "org-jetbrains-kotlin" }
 org-jetbrains-kotlin-kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "org-jetbrains-kotlin" }
-org-jetbrains-kotlin-kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "org-jetbrains-kotlin" }
-org-jetbrains-kotlin-kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "org-jetbrains-kotlin" }
 org-jetbrains-kotlinx-kotlinx-coroutines-play-services = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4"
 com-google-accompanist-accompanist-systemuicontroller = "com.google.accompanist:accompanist-systemuicontroller:0.28.0"
 # Test
@@ -65,14 +63,7 @@ app-cash-turbine = "app.cash.turbine:turbine:0.12.1"
 com-google-truth = "com.google.truth:truth:1.1.3"
 
 [plugins]
-com-android-application = "com.android.application:7.3.1"
-com-android-library = "com.android.library:7.3.1"
 com-google-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "com-google-dagger" }
 com-google-gms-google-services = "com.google.gms.google-services:4.3.14"
 dagger-hilt-android-plugin = { id = "dagger.hilt.android.plugin", version.ref = "com-google-dagger" }
-kotlin-android = { id = "kotlin-android", version.ref = "org-jetbrains-kotlin" }
-kotlin-kapt = { id = "kotlin-kapt", version.ref = "org-jetbrains-kotlin" }
-kotlin-parcelize = { id = "kotlin-parcelize", version.ref = "org-jetbrains-kotlin" }
-kotlin-scripting = { id = "kotlin-scripting", version.ref = "com-google-dagger" }
-org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin" }
 com-autonomousapps-dependency-analysis = "com.autonomousapps.dependency-analysis:1.18.0"
