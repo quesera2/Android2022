@@ -62,7 +62,7 @@ com-google-accompanist-accompanist-systemuicontroller = "com.google.accompanist:
 # Test
 io-kotest-kotest-runner-junit5 = "io.kotest:kotest-runner-junit5:5.5.4"
 app-cash-turbine = "app.cash.turbine:turbine:0.12.1"
-com-google-truth = "com.google.truth:truth:1.0"
+com-google-truth = "com.google.truth:truth:1.1.3"
 
 [plugins]
 com-android-application = "com.android.application:7.3.1"
