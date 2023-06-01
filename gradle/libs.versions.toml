@@ -16,7 +16,7 @@ unit-test = [
 ]
 
 [libraries]
-androidx-activity-activity-compose = "androidx.activity:activity-compose:1.6.1"
+androidx-activity-activity-compose = "androidx.activity:activity-compose:1.7.2"
 androidx-appcompat = "androidx.appcompat:appcompat:1.6.1"
 androidx-compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "androidx-compose-compiler" }
 androidx-compose-material3 = "androidx.compose.material3:material3:1.0.1"
