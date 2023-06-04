@@ -1,5 +1,5 @@
 [versions]
-androidx-compose-bom = "2023.01.00"
+androidx-compose-bom = "2023.05.01"
 androidx-hilt = "1.0.0"
 androidx-lifecycle = "2.5.1"
 androidx-room = "2.5.0"
