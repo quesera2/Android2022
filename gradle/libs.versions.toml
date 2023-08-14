@@ -50,7 +50,7 @@ com-google-firebase-firebase-bom = "com.google.firebase:firebase-bom:31.2.2"
 com-google-firebase-firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx" }
 com-google-firebase-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 com-google-gms-google-services = "com.google.gms:google-services:4.3.15"
-io-mockk = "io.mockk:mockk:1.13.4"
+io-mockk = "io.mockk:mockk:1.13.7"
 junit = "junit:junit:4.13.2"
 org-jacoco-org-jacoco-ant = "org.jacoco:org.jacoco.ant:0.8.8"
 org-jetbrains-kotlin-kotlin-annotation-processing-gradle = { module = "org.jetbrains.kotlin:kotlin-annotation-processing-gradle", version.ref = "org-jetbrains-kotlin" }
