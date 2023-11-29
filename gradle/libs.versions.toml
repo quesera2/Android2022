@@ -2,7 +2,7 @@
 androidx-compose-bom = "2023.01.00"
 androidx-hilt = "1.0.0"
 androidx-lifecycle = "2.5.1"
-androidx-room = "2.5.0"
+androidx-room = "2.6.1"
 com-google-accompanist = "0.28.0"
 com-google-dagger = "2.45"
 org-jetbrains-kotlin = "1.8.10"
